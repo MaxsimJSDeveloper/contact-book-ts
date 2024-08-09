@@ -7,17 +7,22 @@ interface User {
   email: string;
 }
 
-interface RegisterResponse {
+export interface RegisterResponse {
   user: User;
-  token: string;
 }
 
 interface RegisterCredentials {
   name: string;
   email: string;
   password: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface UserRefresh {
+  id: string;
+  name: string;
+  email: string;
 }
 
 axios.defaults.baseURL = "https://swagger-contacts.onrender.com/";
@@ -34,9 +39,11 @@ export const register = createAsyncThunk<
   try {
     const res = await axios.post<RegisterResponse>(
       "/auth/register",
-      credentials
+      credentials,
+      {
+        withCredentials: true,
+      }
     );
-    setAuthHeader(res.data.token);
     return res.data;
   } catch (error) {
     let errorMessage = "An unknown error occurred";
@@ -46,12 +53,6 @@ export const register = createAsyncThunk<
     return thunkAPI.rejectWithValue(errorMessage);
   }
 });
-
-interface UserRefresh {
-  id: string;
-  name: string;
-  email: string;
-}
 
 export const refreshUser = createAsyncThunk<
   UserRefresh,
@@ -90,5 +91,22 @@ export const refreshUser = createAsyncThunk<
       return true;
     },
     dispatchConditionRejection: true,
+  }
+);
+
+export const logIn = createAsyncThunk(
+  "auth/login",
+  async (credentials, thunkAPI) => {
+    try {
+      const res = await axios.post("/users/login", credentials);
+      setAuthHeader(res.data.token);
+      return res.data;
+    } catch (error) {
+      let errorMessage = "An unknown error occurred";
+      if (error instanceof AxiosError) {
+        errorMessage = error.response?.data?.message || error.message;
+      }
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
   }
 );

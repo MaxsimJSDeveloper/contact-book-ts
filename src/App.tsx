@@ -9,10 +9,11 @@ import { refreshUser } from "./redux/auth/operations";
 import { AppDispatch } from "./redux/store";
 import { RestrictedRoute } from "./RestrictedRoute";
 import { PrivateRoute } from "./PrivateRoute";
-import ContactsPage from "./pages/ContactsPage/ContactsPage";
 
 const RegisterPage = lazy(() => import("./pages/RegistPage/RegistPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
+const ContactsPage = lazy(() => import("./pages/ContactsPage/ContactsPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -46,7 +47,7 @@ function App() {
             }
           />
         </Route>
-        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

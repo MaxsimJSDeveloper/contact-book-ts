@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { refreshUser, register } from "./operations";
-import { AuthState, User } from "../../types/general";
+import {
+  refreshUser,
+  register,
+  RegisterResponse,
+  UserRefresh,
+} from "./operations";
+import { AuthState } from "../../types/general";
 
 const initialState: AuthState = {
   user: { name: null, email: null },
-  token: null,
   isLoggedIn: false,
   isRefreshing: false,
   error: null,
@@ -18,9 +22,8 @@ const authSlice = createSlice({
     builder
       .addCase(
         register.fulfilled,
-        (state, action: PayloadAction<{ user: User; token: string }>) => {
+        (state, action: PayloadAction<RegisterResponse>) => {
           state.user = action.payload.user;
-          state.token = action.payload.token;
           state.isLoggedIn = true;
           state.error = null;
         }
@@ -34,12 +37,18 @@ const authSlice = createSlice({
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
       })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoggedIn = true;
-        state.isRefreshing = false;
-        state.error = null;
-      });
+      .addCase(
+        refreshUser.fulfilled,
+        (state, action: PayloadAction<UserRefresh>) => {
+          state.user = {
+            name: action.payload.name,
+            email: action.payload.email,
+          };
+          state.isLoggedIn = true;
+          state.isRefreshing = false;
+          state.error = null;
+        }
+      );
   },
 });
 

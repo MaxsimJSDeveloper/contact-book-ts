@@ -5,12 +5,18 @@ import { useId } from "react";
 import { useDispatch } from "react-redux";
 
 import { logIn } from "../../redux/auth/operations";
-import { login } from "../../js/validation";
 
 import styles from "../formStyles/massage.module.css";
+import { login } from "../../js/validation";
+import { AppDispatch } from "../../redux/store";
+
+interface UserData {
+  email: string;
+  password: string;
+}
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const id = useId();
 
@@ -19,7 +25,7 @@ const LoginForm = () => {
       initialValues={{ email: "", password: "" }}
       validationSchema={login}
       onSubmit={(values, actions) => {
-        const userData = {
+        const userData: UserData = {
           email: values.email.trim(),
           password: values.password.trim(),
         };

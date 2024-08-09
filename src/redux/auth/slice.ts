@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { register } from "./operations";
+import { refreshUser, register } from "./operations";
 import { AuthState, User } from "../../types/general";
 
 const initialState: AuthState = {
@@ -30,7 +30,16 @@ const authSlice = createSlice({
         (state, action: PayloadAction<string | undefined>) => {
           state.error = action.payload || "Registration failed";
         }
-      );
+      )
+      .addCase(refreshUser.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+        state.error = null;
+      });
   },
 });
 

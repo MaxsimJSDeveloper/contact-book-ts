@@ -1,0 +1,47 @@
+.global {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;
+}
+
+.container {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.desc {
+  font-weight: 600;
+  font-size: 16px;
+  padding-left: 10px;
+  color: #fafafa;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 24px;
+  color: #fafafa;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .desc {
+    font-size: 24px;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .desc {
+    font-size: 36px;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+}

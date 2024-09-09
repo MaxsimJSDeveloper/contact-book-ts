@@ -1,22 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../store"; // Обновіть шлях до store, якщо потрібно
+import { RootState } from "../store";
 import axios, { AxiosError } from "axios";
 
-interface User {
-  name: string;
-  email: string;
-}
-
 export interface RegisterResponse {
-  user: User;
-}
-
-interface RegisterCredentials {
   name: string;
   email: string;
   password: string;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface LoginResponse {
+  accessToken: string;
 }
 
 export interface UserRefresh {
@@ -33,24 +28,17 @@ const setAuthHeader = (token: string) => {
 
 export const register = createAsyncThunk<
   RegisterResponse,
-  RegisterCredentials,
   { rejectValue: string }
->("/auth/register", async (credentials, thunkAPI) => {
+>("auth/register", async (credentials, thunkAPI) => {
   try {
     const res = await axios.post<RegisterResponse>(
       "/auth/register",
-      credentials,
-      {
-        withCredentials: true,
-      }
+      credentials
     );
-    return res.data;
+    setAuthHeader(res.data.token);
+    return res.data.data;
   } catch (error) {
-    let errorMessage = "An unknown error occurred";
-    if (error instanceof AxiosError) {
-      errorMessage = error.response?.data?.message || error.message;
-    }
-    return thunkAPI.rejectWithValue(errorMessage);
+    return thunkAPI.rejectWithValue(error.message);
   }
 });
 
@@ -69,8 +57,8 @@ export const refreshUser = createAsyncThunk<
 
     try {
       setAuthHeader(persistedToken);
-      const res = await axios.get<UserRefresh>("auth/refresh");
-      return res.data;
+      const res = await axios.post<UserRefresh>("/auth/refresh");
+      return res.data.data;
     } catch (error) {
       let errorMessage = "An unknown error occurred";
       if (error instanceof AxiosError) {
@@ -94,19 +82,15 @@ export const refreshUser = createAsyncThunk<
   }
 );
 
-export const logIn = createAsyncThunk(
+export const logIn = createAsyncThunk<LoginResponse>(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post("/users/login", credentials);
-      setAuthHeader(res.data.token);
-      return res.data;
+      const res = await axios.post("/auth/login", credentials);
+      setAuthHeader(res.data.data.accessToken);
+      return res.data.data;
     } catch (error) {
-      let errorMessage = "An unknown error occurred";
-      if (error instanceof AxiosError) {
-        errorMessage = error.response?.data?.message || error.message;
-      }
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );

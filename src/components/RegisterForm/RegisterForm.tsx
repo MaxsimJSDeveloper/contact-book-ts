@@ -1,39 +1,50 @@
 import { useDispatch } from "react-redux";
-import { register } from "../../redux/auth/operations";
-
+import { logIn, register } from "../../redux/auth/operations";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { useId } from "react";
 import toast from "react-hot-toast";
-
+import { useNavigate } from "react-router-dom"; // Хук для редіректу
 import styles from "../formStyles/massage.module.css";
 import { AppDispatch } from "../../redux/store";
 import { regist } from "../../js/validation";
 
 const RegisterForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-
   const id = useId();
+  const navigate = useNavigate(); // Ініціалізація навігації
 
   return (
     <Formik
       initialValues={{ name: "", email: "", password: "" }}
       validationSchema={regist}
-      onSubmit={(values, actions) => {
+      onSubmit={async (values, actions) => {
         const newUser = {
           name: values.name.trim(),
           email: values.email.trim(),
           password: values.password.trim(),
         };
-        dispatch(register(newUser))
-          .unwrap()
-          .then(() => {
-            toast.success("Success!", { position: "top-center" });
-          })
-          .catch(() => {
-            toast.error("Error, input correct data", {
-              position: "top-center",
-            });
+
+        try {
+          // Викликаємо реєстрацію
+          await dispatch(register(newUser)).unwrap();
+          toast.success("Registration success!", { position: "top-center" });
+
+          // Після успішної реєстрації логінимося
+          const loginedUser = {
+            email: values.email.trim(),
+            password: values.password.trim(),
+          };
+          await dispatch(logIn(loginedUser)).unwrap();
+          toast.success("Login success!", { position: "top-center" });
+
+          // Редірект на сторінку контактів
+          navigate("/contacts");
+        } catch (error) {
+          toast.error("Error during registration or login", {
+            position: "top-center",
           });
+        }
+
         actions.resetForm();
       }}
     >
@@ -53,6 +64,7 @@ const RegisterForm = () => {
             className={styles.errorMessage}
           />
         </div>
+
         <label htmlFor={`${id}-e`}>Email</label>
         <Field
           type="email"
@@ -68,6 +80,7 @@ const RegisterForm = () => {
             className={styles.errorMessage}
           />
         </div>
+
         <label htmlFor={`${id}-p`}>Password</label>
         <Field
           type="password"
@@ -83,6 +96,7 @@ const RegisterForm = () => {
             className={styles.errorMessage}
           />
         </div>
+
         <button type="submit" className={styles.submitButton}>
           Register
         </button>

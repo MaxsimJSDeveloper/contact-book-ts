@@ -10,7 +10,7 @@ const ContactsPage = () => {
           <title>Contacts</title>
         </Helmet>
         <main className={css.container}>
-          <h3>welcome</h3>
+          <h3 style={{ color: "black" }}>welcome</h3>
         </main>
       </HelmetProvider>
     </>

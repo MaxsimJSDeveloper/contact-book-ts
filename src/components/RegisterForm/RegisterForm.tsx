@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import { logIn, register } from "../../redux/auth/operations";
+import { register } from "../../redux/auth/operations";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { useId } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom"; // Хук для редіректу
+import { useNavigate } from "react-router-dom";
 import styles from "../formStyles/massage.module.css";
 import { AppDispatch } from "../../redux/store";
 import { regist } from "../../js/validation";
@@ -11,7 +11,7 @@ import { regist } from "../../js/validation";
 const RegisterForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const id = useId();
-  const navigate = useNavigate(); // Ініціалізація навігації
+  const navigate = useNavigate();
 
   return (
     <Formik
@@ -25,20 +25,9 @@ const RegisterForm = () => {
         };
 
         try {
-          // Викликаємо реєстрацію
           await dispatch(register(newUser)).unwrap();
           toast.success("Registration success!", { position: "top-center" });
-
-          // Після успішної реєстрації логінимося
-          const loginedUser = {
-            email: values.email.trim(),
-            password: values.password.trim(),
-          };
-          await dispatch(logIn(loginedUser)).unwrap();
-          toast.success("Login success!", { position: "top-center" });
-
-          // Редірект на сторінку контактів
-          navigate("/contacts");
+          navigate("/login");
         } catch (error) {
           toast.error("Error during registration or login", {
             position: "top-center",

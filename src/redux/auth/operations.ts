@@ -1,23 +1,32 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 export interface RegisterResponse {
-  name: string;
-  email: string;
-  password: string;
-  createdAt?: string;
-  updatedAt?: string;
+  status: number;
+  message: string;
+  data: {
+    name: string;
+    email: string;
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+  };
 }
 
 export interface LoginResponse {
-  accessToken: string;
+  status: number;
+  message: string;
+  data: {
+    accessToken: string;
+  };
 }
 
-export interface UserRefresh {
-  id: string;
-  name: string;
-  email: string;
+export interface RefreshResponse {
+  status: number;
+  message: string;
+  data: {
+    accessToken: string;
+  };
 }
 
 axios.defaults.baseURL = "https://swagger-contacts.onrender.com/";
@@ -26,59 +35,16 @@ const setAuthHeader = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-export const register = createAsyncThunk<
-  RegisterResponse,
-  { rejectValue: string }
->("auth/register", async (credentials, thunkAPI) => {
-  try {
-    const res = await axios.post<RegisterResponse>(
-      "/auth/register",
-      credentials
-    );
-    setAuthHeader(res.data.token);
-    return res.data.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
-
-export const refreshUser = createAsyncThunk<
-  UserRefresh,
-  void,
-  {
-    state: RootState;
-    rejectValue: string;
-  }
->(
-  "auth/refresh",
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
-
+export const register = createAsyncThunk<RegisterResponse>(
+  "auth/register",
+  async (credentials, thunkAPI) => {
     try {
-      setAuthHeader(persistedToken);
-      const res = await axios.post<UserRefresh>("/auth/refresh");
+      const res = await axios.post("/auth/register", credentials);
+      console.log(res.data.data);
       return res.data.data;
     } catch (error) {
-      let errorMessage = "An unknown error occurred";
-      if (error instanceof AxiosError) {
-        errorMessage = error.response?.data?.message || error.message;
-      }
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error);
     }
-  },
-  {
-    condition: (_, { getState }) => {
-      const state = getState();
-      const persistedToken = state.auth.token;
-
-      if (persistedToken === null) {
-        return false;
-      }
-
-      return true;
-    },
-    dispatchConditionRejection: true,
   }
 );
 
@@ -88,9 +54,31 @@ export const logIn = createAsyncThunk<LoginResponse>(
     try {
       const res = await axios.post("/auth/login", credentials);
       setAuthHeader(res.data.data.accessToken);
+      console.log(res.data.data.accessToken);
+
       return res.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
+  }
+);
+
+export const refreshUser = createAsyncThunk<RefreshResponse>(
+  "auth/refresh",
+  async (_, thunkAPI) => {
+    const reduxState = thunkAPI.getState();
+    console.log("Token before refresh:", reduxState.auth.token); // Додайте це
+    setAuthHeader(reduxState.auth.token);
+    const res = await axios.post("/auth/refresh", null, {
+      withCredentials: true, // Додає куки до запиту
+    });
+    console.log(res.data.data);
+    return res.data.data;
+  },
+  {
+    condition(_, thunkAPI) {
+      const reduxState = thunkAPI.getState();
+      return reduxState.auth.token !== null; // Перевіряємо, чи є токен
+    },
   }
 );

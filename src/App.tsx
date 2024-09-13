@@ -3,6 +3,7 @@ import { lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import { selectIsRefreshing } from "./redux/auth/selectors";
+import { selectIsLoggedIn } from "./redux/auth/selectors"; // Додайте селектор для перевірки статусу логіна
 
 import Layout from "./components/Layout/Layout";
 import { refreshUser } from "./redux/auth/operations";
@@ -17,12 +18,15 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
-
   const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoggedIn = useSelector(selectIsLoggedIn); // Отримуємо статус логіна
 
   useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+    console.log("isLoggedIn:", isLoggedIn); // Додайте це
+    if (isLoggedIn) {
+      dispatch(refreshUser());
+    }
+  }, [dispatch, isLoggedIn]);
 
   return isRefreshing ? (
     <h1>Loading...</h1>
@@ -33,12 +37,14 @@ function App() {
           <Route
             path="/register"
             element={
-              <RestrictedRoute redirectTo="/" component={RegisterPage} />
+              <RestrictedRoute redirectTo="/login" component={RegisterPage} />
             }
           />
           <Route
             path="/login"
-            element={<RestrictedRoute redirectTo="/" component={LoginPage} />}
+            element={
+              <RestrictedRoute redirectTo="/contacts" component={LoginPage} />
+            }
           />
           <Route
             path="/contacts"

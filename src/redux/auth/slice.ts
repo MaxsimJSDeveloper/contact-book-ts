@@ -1,11 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  logIn,
-  refreshUser,
-  register,
-  RegisterResponse,
-  UserRefresh,
-} from "./operations";
+import { logIn, refreshUser, register, RegisterResponse } from "./operations";
 import { AuthState } from "../../types/general";
 
 const initialState: AuthState = {
@@ -26,7 +20,7 @@ const authSlice = createSlice({
         register.fulfilled,
         (state, action: PayloadAction<RegisterResponse>) => {
           state.user = action.payload;
-          state.isLoggedIn = true;
+          state.isLoggedIn = false;
           state.error = null;
         }
       )
@@ -48,15 +42,12 @@ const authSlice = createSlice({
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
       })
-      .addCase(
-        refreshUser.fulfilled,
-        (state, action: PayloadAction<UserRefresh>) => {
-          state.user = action.payload;
-          state.isLoggedIn = true;
-          state.isRefreshing = false;
-          state.error = null;
-        }
-      )
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+        state.error = null;
+      })
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
         state.error = action.payload;

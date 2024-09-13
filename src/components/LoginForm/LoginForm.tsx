@@ -9,6 +9,7 @@ import { logIn } from "../../redux/auth/operations";
 import styles from "../formStyles/massage.module.css";
 import { login } from "../../js/validation";
 import { AppDispatch } from "../../redux/store";
+import { useNavigate } from "react-router-dom";
 
 interface UserData {
   email: string;
@@ -17,6 +18,8 @@ interface UserData {
 
 const LoginForm = () => {
   const dispatch = useDispatch<AppDispatch>();
+
+  const navigate = useNavigate();
 
   const id = useId();
 
@@ -33,6 +36,7 @@ const LoginForm = () => {
           .unwrap()
           .then(() => {
             toast.success("Success!", { position: "top-center" });
+            navigate("/contacts");
           })
           .catch(() => {
             toast.error("Error, input correct data", {

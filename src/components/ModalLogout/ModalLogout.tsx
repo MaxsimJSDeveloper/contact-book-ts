@@ -1,15 +1,19 @@
 import { useDispatch } from "react-redux";
-
 import css from "./ModalLogout.module.css";
 import { logoutUser } from "../../redux/auth/operations";
 import { AppDispatch } from "../../redux/store";
 
-const ModalLogout = ({ isOpen, onClose }) => {
+interface ModalLogoutProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const ModalLogout: React.FC<ModalLogoutProps> = ({ isOpen, onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   if (!isOpen) return null;
 
-  const handleOutsideClick = (e) => {
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "../formStyles/massage.module.css";
 import { AppDispatch } from "../../redux/store";
 import { regist } from "../../js/validation";
-// import { RegisterUser } from "./RegisterForm.types";
 
 const RegisterForm = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,7 +29,11 @@ const RegisterForm = () => {
           toast.success("Registration success!", { position: "top-center" });
           navigate("/login");
         } catch (error) {
-          toast.error("Error during registration or login", {
+          const errorMessage =
+            error instanceof Error
+              ? error.message
+              : "Error during registration or login";
+          toast.error(errorMessage, {
             position: "top-center",
           });
         }

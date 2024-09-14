@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import axios from "axios";
+import { LoginUser, RegisterUser } from "../../types/general";
 
 export interface RegisterResponse {
   status: number;
@@ -40,7 +41,7 @@ export const setAuthHeader = (token: string) => {
   }
 };
 
-export const register = createAsyncThunk<RegisterResponse>(
+export const register = createAsyncThunk<RegisterResponse, RegisterUser>(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
@@ -52,7 +53,7 @@ export const register = createAsyncThunk<RegisterResponse>(
   }
 );
 
-export const logIn = createAsyncThunk<LoginResponse>(
+export const logIn = createAsyncThunk<LoginResponse, LoginUser>(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {

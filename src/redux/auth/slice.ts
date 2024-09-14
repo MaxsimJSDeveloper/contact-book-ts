@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   logIn,
+  LoginResponse,
   logoutUser,
+  RefreshResponse,
   refreshUser,
   register,
   RegisterResponse,
   setAuthHeader,
 } from "./operations";
-import { AuthState } from "../../types/general";
+import { AuthState } from "../../types/general"; 
 
 const initialState: AuthState = {
   user: { name: null, email: null },
@@ -26,49 +28,53 @@ const authSlice = createSlice({
       .addCase(
         register.fulfilled,
         (state, action: PayloadAction<RegisterResponse>) => {
-          state.user = action.payload;
+          const { name, email } = action.payload.data;
+          state.user = { name, email };
           state.isLoggedIn = false;
           state.error = null;
         }
       )
+      .addCase(register.rejected, (state, action: PayloadAction<unknown>) => {
+        state.error =
+          (action.payload as { message?: string })?.message ||
+          "Registration failed";
+      })
       .addCase(
-        register.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
-          state.error = action.payload || "Registration failed";
+        logIn.fulfilled,
+        (state, action: PayloadAction<LoginResponse>) => {
+          state.token = action.payload.data.accessToken;
+          state.isLoggedIn = true;
+          state.error = null;
         }
       )
-      .addCase(logIn.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.accessToken;
-        state.isLoggedIn = true;
-        state.error = null;
-      })
-      .addCase(logIn.rejected, (state, action) => {
-        state.error = action.payload;
+      .addCase(logIn.rejected, (state, action: PayloadAction<unknown>) => {
+        state.error =
+          (action.payload as { message?: string })?.message || "Login failed";
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
       })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.token = action.payload.accessToken;
-        state.isLoggedIn = true;
+      .addCase(
+        refreshUser.fulfilled,
+        (state, action: PayloadAction<RefreshResponse>) => {
+          state.token = action.payload.data.accessToken;
+          state.isLoggedIn = true;
+          state.isRefreshing = false;
+          state.error = null;
+        }
+      )
+      .addCase(refreshUser.rejected, (state) => {
         state.isRefreshing = false;
-        state.error = null;
-      })
-      .addCase(refreshUser.rejected, (state, action) => {
-        state.isRefreshing = false;
-        state.error = action.payload;
+        state.error = "Refresh failed";
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
         state.error = null;
-        setAuthHeader(null);
+        setAuthHeader("");
       })
-      .addCase(logoutUser.rejected, (state, action) => {
-        state.error = action.payload || "Logout failed";
+      .addCase(logoutUser.rejected, (state) => {
+        state.error = "Logout failed";
       });
   },
 });

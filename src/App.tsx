@@ -2,12 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { selectIsRefreshing } from "./redux/auth/selectors";
-import { selectIsLoggedIn } from "./redux/auth/selectors"; // Додайте селектор для перевірки статусу логіна
-
+import { selectIsRefreshing } from "./redux/auth/selectors"; // Додай селектор для токену
 import Layout from "./components/Layout/Layout";
 import { refreshUser } from "./redux/auth/operations";
-import { AppDispatch } from "./redux/store";
 import { RestrictedRoute } from "./RestrictedRoute";
 import { PrivateRoute } from "./PrivateRoute";
 
@@ -17,18 +14,14 @@ const ContactsPage = lazy(() => import("./pages/ContactsPage/ContactsPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 
 function App() {
-  const dispatch = useDispatch<AppDispatch>();
-  const isRefreshing = useSelector(selectIsRefreshing);
-  const isLoggedIn = useSelector(selectIsLoggedIn); // Отримуємо статус логіна
+  const dispatch = useDispatch();
+  const isRefreshingUser = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    console.log("isLoggedIn:", isLoggedIn); // Додайте це
-    if (isLoggedIn) {
-      dispatch(refreshUser());
-    }
-  }, [dispatch, isLoggedIn]);
+    dispatch(refreshUser());
+  }, [dispatch]);
 
-  return isRefreshing ? (
+  return isRefreshingUser ? (
     <h1>Loading...</h1>
   ) : (
     <>

@@ -32,7 +32,11 @@ export interface RefreshResponse {
 axios.defaults.baseURL = "https://swagger-contacts.onrender.com/";
 
 const setAuthHeader = (token: string) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  if (token) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common.Authorization;
+  }
 };
 
 export const register = createAsyncThunk<RegisterResponse>(
@@ -52,7 +56,9 @@ export const logIn = createAsyncThunk<LoginResponse>(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post("/auth/login", credentials);
+      const res = await axios.post("/auth/login", credentials, {
+        withCredentials: true,
+      });
       setAuthHeader(res.data.data.accessToken);
       console.log(res.data.data.accessToken);
 
@@ -67,18 +73,18 @@ export const refreshUser = createAsyncThunk<RefreshResponse>(
   "auth/refresh",
   async (_, thunkAPI) => {
     const reduxState = thunkAPI.getState();
-    console.log("Token before refresh:", reduxState.auth.token); // Додайте це
-    setAuthHeader(reduxState.auth.token);
+    console.log("Token before refresh:", reduxState.auth.token);
     const res = await axios.post("/auth/refresh", null, {
-      withCredentials: true, // Додає куки до запиту
+      withCredentials: true,
     });
+    setAuthHeader(res.data.data.accessToken);
     console.log(res.data.data);
     return res.data.data;
   },
   {
-    condition(_, thunkAPI) {
-      const reduxState = thunkAPI.getState();
-      return reduxState.auth.token !== null; // Перевіряємо, чи є токен
+    condition(_, { getState }) {
+      const state = getState() as RootState;
+      return state.auth.token !== null && !state.auth.isRefreshing;
     },
   }
 );

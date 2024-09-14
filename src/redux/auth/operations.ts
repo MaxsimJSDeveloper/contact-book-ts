@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 import axios from "axios";
 
 export interface RegisterResponse {
@@ -31,7 +32,7 @@ export interface RefreshResponse {
 
 axios.defaults.baseURL = "https://swagger-contacts.onrender.com/";
 
-const setAuthHeader = (token: string) => {
+export const setAuthHeader = (token: string) => {
   if (token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   } else {
@@ -44,7 +45,6 @@ export const register = createAsyncThunk<RegisterResponse>(
   async (credentials, thunkAPI) => {
     try {
       const res = await axios.post("/auth/register", credentials);
-      console.log(res.data.data);
       return res.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -60,8 +60,6 @@ export const logIn = createAsyncThunk<LoginResponse>(
         withCredentials: true,
       });
       setAuthHeader(res.data.data.accessToken);
-      console.log(res.data.data.accessToken);
-
       return res.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -71,14 +69,11 @@ export const logIn = createAsyncThunk<LoginResponse>(
 
 export const refreshUser = createAsyncThunk<RefreshResponse>(
   "auth/refresh",
-  async (_, thunkAPI) => {
-    const reduxState = thunkAPI.getState();
-    console.log("Token before refresh:", reduxState.auth.token);
+  async () => {
     const res = await axios.post("/auth/refresh", null, {
       withCredentials: true,
     });
     setAuthHeader(res.data.data.accessToken);
-    console.log(res.data.data);
     return res.data.data;
   },
   {
@@ -88,3 +83,10 @@ export const refreshUser = createAsyncThunk<RefreshResponse>(
     },
   }
 );
+
+export const logoutUser = createAsyncThunk("auth/logout", async () => {
+  const res = await axios.post("/auth/logout", null, {
+    withCredentials: true,
+  });
+  return res.data.data;
+});

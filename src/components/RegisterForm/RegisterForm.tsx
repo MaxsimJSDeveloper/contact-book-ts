@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../formStyles/massage.module.css";
 import { AppDispatch } from "../../redux/store";
 import { regist } from "../../js/validation";
+// import { RegisterUser } from "./RegisterForm.types";
 
 const RegisterForm = () => {
   const dispatch = useDispatch<AppDispatch>();

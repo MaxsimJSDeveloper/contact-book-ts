@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { logIn, refreshUser, register, RegisterResponse } from "./operations";
+import {
+  logIn,
+  logoutUser,
+  refreshUser,
+  register,
+  RegisterResponse,
+  setAuthHeader,
+} from "./operations";
 import { AuthState } from "../../types/general";
 
 const initialState: AuthState = {
@@ -52,6 +59,16 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
         state.error = action.payload;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
+        state.error = null;
+        setAuthHeader(null);
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.error = action.payload || "Logout failed";
       });
   },
 });

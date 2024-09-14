@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import Creators from "../../components/Creators/Creators";
 import css from "./HomePage.module.css";
 import { selectUser } from "../../redux/auth/selectors";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import Creators from "../../components/Creators/Creators";
 
 export default function Home() {
   const user = useSelector(selectUser);

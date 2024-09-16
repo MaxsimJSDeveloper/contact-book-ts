@@ -16,22 +16,15 @@ export interface RegisterResponse {
 }
 
 export interface LoginResponse {
-  status: number;
-  message: string;
-  data: {
-    accessToken: string;
-  };
+  accessToken: string;
 }
 
 export interface RefreshResponse {
-  status: number;
-  message: string;
-  data: {
-    accessToken: string;
-  };
+  accessToken: string;
 }
 
 axios.defaults.baseURL = "https://swagger-contacts.onrender.com/";
+// axios.defaults.baseURL = "http://localhost:3000/";
 
 export const setAuthHeader = (token: string) => {
   if (token) {
@@ -46,6 +39,7 @@ export const register = createAsyncThunk<RegisterResponse, RegisterUser>(
   async (credentials, thunkAPI) => {
     try {
       const res = await axios.post("/auth/register", credentials);
+      console.log(res.data);
       return res.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

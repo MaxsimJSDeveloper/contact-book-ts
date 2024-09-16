@@ -9,7 +9,7 @@ import {
   RegisterResponse,
   setAuthHeader,
 } from "./operations";
-import { AuthState } from "../../types/general"; 
+import { AuthState } from "../../types/general";
 
 const initialState: AuthState = {
   user: { name: null, email: null },
@@ -28,10 +28,15 @@ const authSlice = createSlice({
       .addCase(
         register.fulfilled,
         (state, action: PayloadAction<RegisterResponse>) => {
-          const { name, email } = action.payload.data;
-          state.user = { name, email };
-          state.isLoggedIn = false;
-          state.error = null;
+          const { data } = action.payload;
+          if (data) {
+            const { name, email } = data;
+            state.user = { name, email };
+            state.isLoggedIn = true;
+            state.error = null;
+          } else {
+            state.error = "Registration failed: no user data";
+          }
         }
       )
       .addCase(register.rejected, (state, action: PayloadAction<unknown>) => {
@@ -42,7 +47,7 @@ const authSlice = createSlice({
       .addCase(
         logIn.fulfilled,
         (state, action: PayloadAction<LoginResponse>) => {
-          state.token = action.payload.data.accessToken;
+          state.token = action.payload.accessToken;
           state.isLoggedIn = true;
           state.error = null;
         }
@@ -57,7 +62,7 @@ const authSlice = createSlice({
       .addCase(
         refreshUser.fulfilled,
         (state, action: PayloadAction<RefreshResponse>) => {
-          state.token = action.payload.data.accessToken;
+          state.token = action.payload.accessToken;
           state.isLoggedIn = true;
           state.isRefreshing = false;
           state.error = null;

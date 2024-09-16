@@ -25,6 +25,8 @@ const RegisterForm = () => {
         };
 
         try {
+          console.log(newUser);
+
           await dispatch(register(newUser)).unwrap();
           toast.success("Registration success!", { position: "top-center" });
           navigate("/login");

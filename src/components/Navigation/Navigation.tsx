@@ -18,7 +18,7 @@ const Navigation: React.FC<NavigationProps> = ({ onLinkClick }) => {
         className={({ isActive }) =>
           isActive ? `${css.link} ${css.activeLink}` : css.link
         }
-        to="/home"
+        to="/"
         onClick={onLinkClick}
       >
         Home

@@ -12,7 +12,7 @@ import {
 import { AuthState } from "../../types/general";
 
 const initialState: AuthState = {
-  user: { name: null, email: null },
+  user: "",
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -28,8 +28,7 @@ const authSlice = createSlice({
       .addCase(
         register.fulfilled,
         (state, action: PayloadAction<RegisterResponse>) => {
-          const { name, email } = action.payload;
-          state.user = { name, email };
+          state.user = action.payload.name;
           state.isLoggedIn = false;
           state.error = null;
         }
@@ -45,6 +44,7 @@ const authSlice = createSlice({
           state.token = action.payload.accessToken;
           state.isLoggedIn = true;
           state.error = null;
+          // зробити отримання імені користувача при логіні
         }
       )
       .addCase(logIn.rejected, (state, action: PayloadAction<unknown>) => {

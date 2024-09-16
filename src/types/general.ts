@@ -4,7 +4,7 @@ export interface User {
 }
 
 export interface AuthState {
-  user: User;
+  user: string;
   token: string | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;

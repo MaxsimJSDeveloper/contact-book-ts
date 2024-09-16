@@ -8,6 +8,7 @@ import { refreshUser } from "./redux/auth/operations";
 import { RestrictedRoute } from "./RestrictedRoute";
 import { PrivateRoute } from "./PrivateRoute";
 import { AppDispatch } from "./redux/store";
+import Loader from "./components/Loader/Loader";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const RegisterPage = lazy(() => import("./pages/RegistPage/RegistPage"));
@@ -24,17 +25,12 @@ function App() {
   }, [dispatch]);
 
   return isRefreshingUser ? (
-    <h1>Loading...</h1>
+    <Loader />
   ) : (
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            path="/home"
-            element={
-              <RestrictedRoute redirectTo="/home" component={HomePage} />
-            }
-          />
+          <Route index element={<HomePage />} />
           <Route
             path="/register"
             element={

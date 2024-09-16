@@ -25,8 +25,6 @@ const RegisterForm = () => {
         };
 
         try {
-          console.log(newUser);
-
           await dispatch(register(newUser)).unwrap();
           toast.success("Registration success!", { position: "top-center" });
           navigate("/login");
@@ -34,7 +32,7 @@ const RegisterForm = () => {
           const errorMessage =
             error instanceof Error
               ? error.message
-              : "Error during registration or login";
+              : "Error during registration";
           toast.error(errorMessage, {
             position: "top-center",
           });

@@ -28,15 +28,10 @@ const authSlice = createSlice({
       .addCase(
         register.fulfilled,
         (state, action: PayloadAction<RegisterResponse>) => {
-          const { data } = action.payload;
-          if (data) {
-            const { name, email } = data;
-            state.user = { name, email };
-            state.isLoggedIn = true;
-            state.error = null;
-          } else {
-            state.error = "Registration failed: no user data";
-          }
+          const { name, email } = action.payload;
+          state.user = { name, email };
+          state.isLoggedIn = false;
+          state.error = null;
         }
       )
       .addCase(register.rejected, (state, action: PayloadAction<unknown>) => {

@@ -4,15 +4,11 @@ import axios from "axios";
 import { LoginUser, RegisterUser } from "../../types/general";
 
 export interface RegisterResponse {
-  status: number;
-  message: string;
-  data: {
-    name: string;
-    email: string;
-    _id: string;
-    createdAt: string;
-    updatedAt: string;
-  };
+  name: string;
+  email: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface LoginResponse {
@@ -38,9 +34,8 @@ export const register = createAsyncThunk<RegisterResponse, RegisterUser>(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post("/auth/register", credentials);
-      console.log(res.data);
-      return res.data.data;
+      const { data } = await axios.post("/auth/register", credentials);
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -51,11 +46,11 @@ export const logIn = createAsyncThunk<LoginResponse, LoginUser>(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post("/auth/login", credentials, {
+      const { data } = await axios.post("/auth/login", credentials, {
         withCredentials: true,
       });
-      setAuthHeader(res.data.data.accessToken);
-      return res.data.data;
+      setAuthHeader(data.data.accessToken);
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -65,11 +60,11 @@ export const logIn = createAsyncThunk<LoginResponse, LoginUser>(
 export const refreshUser = createAsyncThunk<RefreshResponse>(
   "auth/refresh",
   async () => {
-    const res = await axios.post("/auth/refresh", null, {
+    const { data } = await axios.post("/auth/refresh", null, {
       withCredentials: true,
     });
-    setAuthHeader(res.data.data.accessToken);
-    return res.data.data;
+    setAuthHeader(data.data.accessToken);
+    return data.data;
   },
   {
     condition(_, { getState }) {
@@ -80,8 +75,8 @@ export const refreshUser = createAsyncThunk<RefreshResponse>(
 );
 
 export const logoutUser = createAsyncThunk("auth/logout", async () => {
-  const res = await axios.post("/auth/logout", null, {
+  const { data } = await axios.post("/auth/logout", null, {
     withCredentials: true,
   });
-  return res.data.data;
+  return data.data;
 });

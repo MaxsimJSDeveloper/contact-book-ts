@@ -18,9 +18,16 @@ const authPersistConfig = {
   whitelist: ["token"],
 };
 
+const userPersistConfig = {
+  key: "user",
+  storage,
+  whitelist: ["user"], // только пользователь
+};
+
 const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
+    user: persistReducer(userPersistConfig, authReducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

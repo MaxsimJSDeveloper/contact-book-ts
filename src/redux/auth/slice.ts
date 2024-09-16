@@ -6,13 +6,15 @@ import {
   RefreshResponse,
   refreshUser,
   register,
-  RegisterResponse,
   setAuthHeader,
 } from "./operations";
 import { AuthState } from "../../types/general";
 
 const initialState: AuthState = {
-  user: "",
+  user: {
+    name: "",
+    email: "",
+  },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -25,14 +27,10 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(
-        register.fulfilled,
-        (state, action: PayloadAction<RegisterResponse>) => {
-          state.user = action.payload.name;
-          state.isLoggedIn = false;
-          state.error = null;
-        }
-      )
+      .addCase(register.fulfilled, (state) => {
+        state.isLoggedIn = false;
+        state.error = null;
+      })
       .addCase(register.rejected, (state, action: PayloadAction<unknown>) => {
         state.error =
           (action.payload as { message?: string })?.message ||
@@ -44,7 +42,8 @@ const authSlice = createSlice({
           state.token = action.payload.accessToken;
           state.isLoggedIn = true;
           state.error = null;
-          // зробити отримання імені користувача при логіні
+          state.user.name = action.payload.user.name;
+          state.user.email = action.payload.user.email;
         }
       )
       .addCase(logIn.rejected, (state, action: PayloadAction<unknown>) => {

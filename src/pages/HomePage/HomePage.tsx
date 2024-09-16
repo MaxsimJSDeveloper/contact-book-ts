@@ -6,7 +6,6 @@ import Creators from "../../components/Creators/Creators";
 
 export default function Home() {
   const user = useSelector(selectUser);
-  console.log(user);
 
   return (
     <HelmetProvider>

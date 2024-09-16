@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import axios from "axios";
-import { LoginUser, RegisterUser } from "../../types/general";
+import { LoginUser, RegisterUser, User } from "../../types/general";
 
 export interface RegisterResponse {
   name: string;
@@ -12,6 +12,7 @@ export interface RegisterResponse {
 }
 
 export interface LoginResponse {
+  user: User;
   accessToken: string;
 }
 
@@ -19,7 +20,7 @@ export interface RefreshResponse {
   accessToken: string;
 }
 
-axios.defaults.baseURL = "https://swagger-contacts.onrender.com/";
+axios.defaults.baseURL = "https://contact-book-backend-77nn.onrender.com";
 // axios.defaults.baseURL = "http://localhost:3000/";
 
 export const setAuthHeader = (token: string) => {
@@ -35,8 +36,6 @@ export const register = createAsyncThunk<RegisterResponse, RegisterUser>(
   async (credentials, thunkAPI) => {
     try {
       const { data } = await axios.post("/auth/register", credentials);
-      console.log(data.data);
-
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -65,6 +64,8 @@ export const refreshUser = createAsyncThunk<RefreshResponse>(
     const { data } = await axios.post("/auth/refresh", null, {
       withCredentials: true,
     });
+    console.log(data);
+
     setAuthHeader(data.data.accessToken);
     return data.data;
   },

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import axios from "axios";
-import { LoginUser, RegisterUser, User } from "../../types/general";
+import { LoginUser, RegisterUser } from "../../types/general";
 
 export interface RegisterResponse {
   name: string;
@@ -12,7 +12,6 @@ export interface RegisterResponse {
 }
 
 export interface LoginResponse {
-  user: User;
   accessToken: string;
 }
 
@@ -64,7 +63,6 @@ export const refreshUser = createAsyncThunk<RefreshResponse>(
     const { data } = await axios.post("/auth/refresh", null, {
       withCredentials: true,
     });
-    console.log(data);
 
     setAuthHeader(data.data.accessToken);
     return data.data;

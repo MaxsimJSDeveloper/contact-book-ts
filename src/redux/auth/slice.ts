@@ -11,10 +11,6 @@ import {
 import { AuthState } from "../../types/general";
 
 const initialState: AuthState = {
-  user: {
-    name: "",
-    email: "",
-  },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -42,8 +38,6 @@ const authSlice = createSlice({
           state.token = action.payload.accessToken;
           state.isLoggedIn = true;
           state.error = null;
-          state.user.name = action.payload.user.name;
-          state.user.email = action.payload.user.email;
         }
       )
       .addCase(logIn.rejected, (state, action: PayloadAction<unknown>) => {

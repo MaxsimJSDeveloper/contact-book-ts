@@ -1,13 +1,28 @@
 import { useSelector } from "react-redux";
 import css from "./HomePage.module.css";
-import { selectUser } from "../../redux/auth/selectors";
+
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Creators from "../../components/Creators/Creators";
+import { selectUser } from "../../redux/user/selectors";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { fetchUser } from "../../redux/user/operations";
+import { selectIsRefreshing } from "../../redux/auth/selectors";
+import Loader from "../../components/Loader/Loader";
 
 export default function Home() {
   const user = useSelector(selectUser);
+  const dispatch = useDispatch<AppDispatch>();
+  const isRefreshingUser = useSelector(selectIsRefreshing);
 
-  return (
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  return isRefreshingUser ? (
+    <Loader />
+  ) : (
     <HelmetProvider>
       <div className={css.global}>
         <Helmet>

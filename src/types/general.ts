@@ -25,3 +25,22 @@ export interface LoginUser {
   email: string;
   password: string;
 }
+
+export interface ContactsState {
+  contacts: Contact[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+export interface Contact {
+  _id: string;
+  name: string;
+  phoneNumber: string;
+  email: string;
+  isFavourite: boolean;
+  contactType: string;
+  userId: string;
+  photo: string;
+  createdAt: string;
+  updatedAt: string;
+}

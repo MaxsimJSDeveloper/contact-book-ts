@@ -1,0 +1,39 @@
+.avatar {
+  margin-right: 14px;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.info {
+  color: #00242a;
+}
+
+.number {
+  color: #00778b;
+}
+
+.bin {
+  width: 26px;
+  height: 26px;
+  fill: #b31818;
+}
+
+.pencil {
+  width: 26px;
+  height: 26px;
+  fill: #00778b;
+}
+
+.pencil:hover {
+  fill: #006c7e;
+}
+
+.bin:hover {
+  fill: #a90006;
+}

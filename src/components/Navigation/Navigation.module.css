@@ -5,11 +5,20 @@
 .nav {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+@media (max-width: 769px) {
+  .nav:first-child {
+    margin-top: 20px;
+  }
 }
 
 .link {
   display: inline-block;
-  font-size: 16px;
+  font-size: 24px;
   line-height: 14px;
   color: #fafafa;
   position: relative;
@@ -38,7 +47,6 @@
   }
 
   .link {
-    font-size: 24px;
     line-height: 28px;
   }
 

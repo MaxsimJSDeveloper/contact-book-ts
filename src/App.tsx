@@ -9,6 +9,8 @@ import { RestrictedRoute } from "./RestrictedRoute";
 import { PrivateRoute } from "./PrivateRoute";
 import { AppDispatch } from "./redux/store";
 import Loader from "./components/Loader/Loader";
+import Logo from "./components/Logo/Logo";
+import { Toaster } from "react-hot-toast";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const RegisterPage = lazy(() => import("./pages/RegistPage/RegistPage"));
@@ -28,6 +30,7 @@ function App() {
     <Loader />
   ) : (
     <>
+      <Logo />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -52,6 +55,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 }

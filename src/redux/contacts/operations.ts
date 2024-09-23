@@ -6,8 +6,6 @@ export interface FetchContactsResp {
   data: Contact[];
 }
 
-axios.defaults.baseURL = "https://contact-book-backend-77nn.onrender.com";
-
 export const fetchContacts = createAsyncThunk<FetchContactsResp>(
   "contacts/fetchAll",
   async (_, thunkAPI) => {

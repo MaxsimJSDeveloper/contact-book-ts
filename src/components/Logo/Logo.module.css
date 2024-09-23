@@ -1,0 +1,17 @@
+.box {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 90px;
+  height: 40px;
+  left: 5%;
+  top: 5%;
+}
+
+.text {
+  padding-left: 3px;
+  font-size: 10px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #fafafa;
+}

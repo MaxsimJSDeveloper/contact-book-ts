@@ -28,7 +28,6 @@ export default function Home() {
         <Helmet>
           <title>Home</title>
         </Helmet>
-
         <div className={css.container}>
           <h1 className={css.title}>Welcome {user.name}!</h1>
           {user.name ? (

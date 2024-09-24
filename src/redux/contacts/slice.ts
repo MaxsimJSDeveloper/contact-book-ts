@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  // addContact,
+  addContact,
   // deleteContact,
   // editContact,
   fetchContacts,
@@ -35,14 +35,21 @@ const contactsSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.contacts = action.payload.data;
+      })
+      .addCase(addContact.rejected, (state, action: PayloadAction<unknown>) => {
+        state.error =
+          (action.payload as { message?: string })?.message ||
+          "Contacts not add";
+        state.isLoading = false;
+      })
+      .addCase(addContact.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.contacts.push(action.payload);
       });
-    // .addCase(addContact.rejected, handleRejected)
-    // .addCase(addContact.pending, handlePending)
-    // .addCase(addContact.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = null;
-    //   state.items.push(action.payload);
-    // })
     // .addCase(deleteContact.rejected, handleRejected)
     // .addCase(deleteContact.pending, handlePending)
     // .addCase(deleteContact.fulfilled, (state, action) => {

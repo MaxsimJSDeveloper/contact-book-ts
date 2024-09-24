@@ -44,3 +44,9 @@ export interface Contact {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface NewContact {
+  name: string;
+  phoneNumber: string;
+  contactType: string;
+}

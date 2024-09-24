@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loader from "../../components/Loader/Loader";
+import AddContactBtn from "../../components/AddContactBtn/AddContactBtn";
 
 const ContactsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,11 +39,11 @@ const ContactsPage = () => {
           <title>Contacts</title>
         </Helmet>
         <main className={css.container}>
-          <h3 style={{ color: "black" }}>Contacts</h3>
           {error && "Error! Try again"}
           {loading && <Loader />}
           <ContactList contacts={contacts} />
         </main>
+        <AddContactBtn />
       </HelmetProvider>
     </>
   );

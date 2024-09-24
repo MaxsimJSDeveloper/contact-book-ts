@@ -13,8 +13,8 @@ import Modal from "../Modal/Modal";
 
 const AppBar = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [isOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+  const [isOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {

@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 
 import { logIn } from "../../redux/auth/operations";
 
-import styles from "../formStyles/massage.module.css";
-import { login } from "../../js/validation";
+import styles from "../../styles/massage.module.css";
+import { login } from "../../schemas/validation";
 import { AppDispatch } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 

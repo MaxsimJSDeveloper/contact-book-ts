@@ -6,9 +6,9 @@ import {
   RefreshResponse,
   refreshUser,
   register,
-  setAuthHeader,
 } from "./operations";
 import { AuthState } from "../../types/general";
+import { clearAuthHeader } from "../../api/contactsApi";
 
 const initialState: AuthState = {
   token: null,
@@ -38,7 +38,7 @@ const authSlice = createSlice({
           state.token = action.payload.accessToken;
           state.isLoggedIn = true;
           state.error = null;
-        }
+        },
       )
       .addCase(logIn.rejected, (state, action: PayloadAction<unknown>) => {
         state.error =
@@ -54,7 +54,7 @@ const authSlice = createSlice({
           state.isLoggedIn = true;
           state.isRefreshing = false;
           state.error = null;
-        }
+        },
       )
       .addCase(refreshUser.rejected, (state) => {
         state.isRefreshing = false;
@@ -64,7 +64,7 @@ const authSlice = createSlice({
         state.token = null;
         state.isLoggedIn = false;
         state.error = null;
-        setAuthHeader("");
+        clearAuthHeader();
       })
       .addCase(logoutUser.rejected, (state) => {
         state.error = "Logout failed";

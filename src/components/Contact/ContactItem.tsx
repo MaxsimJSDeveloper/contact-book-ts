@@ -4,8 +4,9 @@
 // import { setActiveContact } from "../../redux/contacts/slice";
 
 // import { Avatar } from "@mui/material";
-import { stringAvatar } from "../../js/utils";
+
 import { Contact } from "../../types/general";
+import { stringAvatar } from "../../utils/stringAvatar";
 // import ModalEdit from "../ModalEdit/ModalEdit";
 
 import css from "./Contact.module.css";

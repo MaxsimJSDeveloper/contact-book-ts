@@ -1,14 +1,14 @@
 import { useId } from "react";
-import { FeedbackSchema } from "../../js/validation";
+import { FeedbackSchema } from "../../schemas/validation";
 import { AppDispatch } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { addContact } from "../../redux/contacts/operations";
 import toast from "react-hot-toast";
 
-import styles from "../formStyles/massage.module.css";
+import styles from "../../styles/massage.module.css";
 import css from "./AddContactModalContent.module.css";
-import { handleKeyPress } from "../../js/handleKeyPress";
+import { handleKeyPress } from "../../utils/handleKeyPress";
 
 const AddContactModalContent = () => {
   const id = useId();

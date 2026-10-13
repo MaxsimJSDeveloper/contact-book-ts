@@ -4,9 +4,9 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import { useId } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import styles from "../formStyles/massage.module.css";
+import styles from "../../styles/massage.module.css";
 import { AppDispatch } from "../../redux/store";
-import { regist } from "../../js/validation";
+import { regist } from "../../schemas/validation";
 
 const RegisterForm = () => {
   const dispatch = useDispatch<AppDispatch>();

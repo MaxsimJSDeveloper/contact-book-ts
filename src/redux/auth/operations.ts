@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { LoginUser, RegisterUser } from "../../types/general";
 import { api, setAuthHeader } from "../../api/contactsApi";
-import axios from "axios";
+import { handleAxiosError } from "../../utils/handleAxiosError";
 
 export interface RegisterResponse {
   name: string;
@@ -27,14 +27,8 @@ export const register = createAsyncThunk<RegisterResponse, RegisterUser>(
       const { data } = await api.post("/auth/register", credentials);
       return data.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(
-          error.response?.data?.message ||
-            error.message ||
-            "Something went wrong",
-        );
-      }
-      return thunkAPI.rejectWithValue("Something went wrong");
+      
+      return thunkAPI.rejectWithValue(handleAxiosError(error, "Something went wrong"));
     }
   },
 );
@@ -49,14 +43,7 @@ export const logIn = createAsyncThunk<LoginResponse, LoginUser>(
       setAuthHeader(data.data.accessToken);
       return data.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(
-          error.response?.data?.message ||
-            error.message ||
-            "Something went wrong",
-        );
-      }
-      return thunkAPI.rejectWithValue("Something went wrong");
+      return thunkAPI.rejectWithValue(handleAxiosError(error, "Failed to login"));
     }
   },
 );

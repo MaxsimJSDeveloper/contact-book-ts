@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import {
   logIn,
   LoginResponse,
@@ -8,7 +8,6 @@ import {
   register,
 } from "./operations";
 import { AuthState } from "../../types/general";
-import { clearAuthHeader } from "../../api/contactsApi";
 
 const initialState: AuthState = {
   token: null,
@@ -25,50 +24,53 @@ const authSlice = createSlice({
     builder
       .addCase(register.fulfilled, (state) => {
         state.isLoggedIn = false;
-        state.error = null;
-      })
-      .addCase(register.rejected, (state, action: PayloadAction<unknown>) => {
-        state.error =
-          (action.payload as { message?: string })?.message ||
-          "Registration failed";
-      })
-      .addCase(
-        logIn.fulfilled,
-        (state, action: PayloadAction<LoginResponse>) => {
-          state.token = action.payload.accessToken;
-          state.isLoggedIn = true;
-          state.error = null;
-        },
-      )
-      .addCase(logIn.rejected, (state, action: PayloadAction<unknown>) => {
-        state.error =
-          (action.payload as { message?: string })?.message || "Login failed";
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
       })
-      .addCase(
-        refreshUser.fulfilled,
-        (state, action: PayloadAction<RefreshResponse>) => {
-          state.token = action.payload.accessToken;
-          state.isLoggedIn = true;
-          state.isRefreshing = false;
-          state.error = null;
-        },
-      )
-      .addCase(refreshUser.rejected, (state) => {
-        state.isRefreshing = false;
-        state.error = "Refresh failed";
-      })
       .addCase(logoutUser.fulfilled, (state) => {
         state.token = null;
         state.isLoggedIn = false;
-        state.error = null;
-        clearAuthHeader();
       })
-      .addCase(logoutUser.rejected, (state) => {
-        state.error = "Logout failed";
-      });
+      .addMatcher(
+        isAnyOf(logIn.fulfilled, refreshUser.fulfilled),
+        (state, action: PayloadAction<LoginResponse | RefreshResponse>) => {
+          state.token = action.payload.accessToken;
+          state.isLoggedIn = true;
+        },
+      )
+      .addMatcher(
+        isAnyOf(refreshUser.fulfilled, refreshUser.rejected),
+        (state) => {
+          state.isRefreshing = false;
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          register.pending,
+          logIn.pending,
+          refreshUser.pending,
+          logoutUser.pending,
+        ),
+        (state) => {
+          state.error = null;
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          register.rejected,
+          logIn.rejected,
+          refreshUser.rejected,
+          logoutUser.rejected,
+        ),
+        (state, action: PayloadAction<unknown>) => {
+          state.error =
+            typeof action.payload === "string"
+              ? action.payload
+              : (action.payload as { message?: string })?.message ||
+                "Authentication failed";
+        },
+      );
   },
 });
 

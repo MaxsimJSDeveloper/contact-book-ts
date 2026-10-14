@@ -1,5 +1,6 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { handleAxiosError } from "../../utils/handleAxiosError";
+import { api } from "../../api/contactsApi";
 
 export interface FetchUserResponse {
   _id: string;
@@ -9,17 +10,14 @@ export interface FetchUserResponse {
   updatedAt: string;
 }
 
-axios.defaults.baseURL = "https://contact-book-backend-77nn.onrender.com";
-// axios.defaults.baseURL = "http://localhost:3000/";
-
 export const fetchUser = createAsyncThunk<FetchUserResponse>(
   "user/fetchUser",
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get("/user");
+      const { data } = await api.get("/user");
       return data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(handleAxiosError(error, "Failed to fetch user"));
     }
   }
 );

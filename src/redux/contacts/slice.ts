@@ -1,11 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import {
-  addContact,
-  // deleteContact,
-  // editContact,
   fetchContacts,
+  addContact,
+  deleteContact,
+  updateContact,
 } from "./operations";
-import { ContactsState } from "../../types/general";
+import { Contact, ContactsState } from "../../types/general";
 
 const initialState: ContactsState = {
   contacts: [],
@@ -20,56 +20,75 @@ const contactsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        fetchContacts.rejected,
-        (state, action: PayloadAction<unknown>) => {
-          state.error =
-            (action.payload as { message?: string })?.message ||
-            "Contacts not found";
-          state.isLoading = false;
-        }
+        fetchContacts.fulfilled,
+        (state, action: PayloadAction<Contact[]>) => {
+          state.contacts = action.payload;
+        },
       )
-      .addCase(fetchContacts.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
-        state.contacts = action.payload.data;
-      })
-      .addCase(addContact.rejected, (state, action: PayloadAction<unknown>) => {
-        state.error =
-          (action.payload as { message?: string })?.message ||
-          "Contacts not add";
-        state.isLoading = false;
-      })
-      .addCase(addContact.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(addContact.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
-        state.contacts.push(action.payload);
-      });
-    // .addCase(deleteContact.rejected, handleRejected)
-    // .addCase(deleteContact.pending, handlePending)
-    // .addCase(deleteContact.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = null;
-    //   const index = state.items.findIndex(
-    //     (contact) => contact.id === action.payload.id
-    //   );
-    //   state.items.splice(index, 1);
-    // })
-    // .addCase(editContact.rejected, handleRejected)
-    // .addCase(editContact.pending, handlePending)
-    // .addCase(editContact.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = null;
-    //   const index = state.items.findIndex(
-    //     (contact) => contact.id === action.payload.id
-    //   );
-    //   state.items[index] = action.payload;
-    // });
+      .addCase(
+        addContact.fulfilled,
+        (state, action: PayloadAction<Contact>) => {
+          state.contacts.push(action.payload);
+        },
+      )
+      .addCase(
+        deleteContact.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.contacts = state.contacts.filter(
+            (c) => c._id !== action.payload,
+          );
+        },
+      )
+      .addCase(
+        updateContact.fulfilled,
+        (state, action: PayloadAction<Contact>) => {
+          const index = state.contacts.findIndex(
+            (c) => c._id === action.payload._id,
+          );
+          if (index !== -1) {
+            state.contacts[index] = action.payload;
+          }
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchContacts.pending,
+          addContact.pending,
+          deleteContact.pending,
+          updateContact.pending,
+        ),
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchContacts.fulfilled,
+          addContact.fulfilled,
+          deleteContact.fulfilled,
+          updateContact.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = false;
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchContacts.rejected,
+          addContact.rejected,
+          deleteContact.rejected,
+          updateContact.rejected,
+        ),
+        (state, action: PayloadAction<unknown>) => {
+          state.isLoading = false;
+          state.error =
+            typeof action.payload === "string"
+              ? action.payload
+              : (action.payload as { message?: string })?.message ||
+                "Something went wrong";
+        },
+      );
   },
 });
 

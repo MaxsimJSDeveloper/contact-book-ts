@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const regist = Yup.object().shape({
+export const registration = Yup.object().shape({
   name: Yup.string()
     .min(3, "Too Short!")
     .max(14, "Too Long!")

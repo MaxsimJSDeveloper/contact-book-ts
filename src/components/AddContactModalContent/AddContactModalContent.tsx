@@ -1,7 +1,5 @@
 import { useId } from "react";
 import { FeedbackSchema } from "../../schemas/validation";
-import { AppDispatch } from "../../redux/store";
-import { useDispatch } from "react-redux";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { addContact } from "../../redux/contacts/operations";
 import toast from "react-hot-toast";
@@ -9,11 +7,12 @@ import toast from "react-hot-toast";
 import styles from "../../styles/massage.module.css";
 import css from "./AddContactModalContent.module.css";
 import { handleKeyPress } from "../../utils/handleKeyPress";
+import { useAppDispatch } from "../../redux/hooks";
 
 const AddContactModalContent = () => {
   const id = useId();
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   return (
     <>

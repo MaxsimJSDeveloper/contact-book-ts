@@ -8,15 +8,14 @@ import {
   selectIsLoading,
 } from "../../redux/contacts/selectors";
 import { fetchContacts } from "../../redux/contacts/operations";
-import { AppDispatch } from "../../redux/store";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Loader from "../../components/Loader/Loader";
 import AddContactBtn from "../../components/AddContactBtn/AddContactBtn";
+import { useAppDispatch } from "../../redux/hooks";
 
 const ContactsPage = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const contacts = useSelector(selectContacts);
   const error = useSelector(selectError);

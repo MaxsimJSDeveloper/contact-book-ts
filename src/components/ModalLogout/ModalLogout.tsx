@@ -1,7 +1,6 @@
-import { useDispatch } from "react-redux";
 import css from "./ModalLogout.module.css";
 import { logoutUser } from "../../redux/auth/operations";
-import { AppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../redux/hooks";
 
 interface ModalLogoutProps {
   isOpen: boolean;
@@ -9,7 +8,7 @@ interface ModalLogoutProps {
 }
 
 const ModalLogout: React.FC<ModalLogoutProps> = ({ isOpen, onClose }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   if (!isOpen) return null;
 

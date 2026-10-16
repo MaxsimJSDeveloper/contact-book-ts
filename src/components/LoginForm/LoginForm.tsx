@@ -2,14 +2,13 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import toast from "react-hot-toast";
 
 import { useId } from "react";
-import { useDispatch } from "react-redux";
 
 import { logIn } from "../../redux/auth/operations";
 
 import styles from "../../styles/massage.module.css";
 import { login } from "../../schemas/validation";
-import { AppDispatch } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
 
 interface UserData {
   email: string;
@@ -17,7 +16,7 @@ interface UserData {
 }
 
 const LoginForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 

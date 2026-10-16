@@ -1,22 +1,21 @@
-import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { useId } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/massage.module.css";
-import { AppDispatch } from "../../redux/store";
-import { regist } from "../../schemas/validation";
+import { registration } from "../../schemas/validation";
+import { useAppDispatch } from "../../redux/hooks";
 
 const RegisterForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const id = useId();
   const navigate = useNavigate();
 
   return (
     <Formik
       initialValues={{ name: "", email: "", password: "" }}
-      validationSchema={regist}
+      validationSchema={registration}
       onSubmit={async (values, actions) => {
         const newUser = {
           name: values.name.trim(),

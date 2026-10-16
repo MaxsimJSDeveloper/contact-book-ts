@@ -1,13 +1,12 @@
-import { useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
-import { AppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../redux/hooks";
 
 interface LogoutProps {
   onClose: () => void;
 }
 
 const Logout: React.FC<LogoutProps> = ({ onClose }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   return (
     <button

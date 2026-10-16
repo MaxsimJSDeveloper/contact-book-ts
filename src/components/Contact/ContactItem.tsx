@@ -1,10 +1,9 @@
-// import { useDispatch } from "react-redux";
-// import { AppDispatch } from "../../redux/store";
 // import { BsTrash, BsPencilSquare } from "react-icons/bs";
 // import { setActiveContact } from "../../redux/contacts/slice";
 
 // import { Avatar } from "@mui/material";
 
+// import { useAppDispatch } from "../../redux/hooks";
 import { Contact } from "../../types/general";
 import { stringAvatar } from "../../utils/stringAvatar";
 // import ModalEdit from "../ModalEdit/ModalEdit";
@@ -16,7 +15,7 @@ interface ContactItemProps {
 }
 
 const ContactItem: React.FC<ContactItemProps> = ({ contactInfo }) => {
-  // const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useAppDispatch();
 
   const { name, phoneNumber } = contactInfo;
 

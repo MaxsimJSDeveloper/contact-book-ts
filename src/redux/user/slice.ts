@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { fetchUser } from "./operations";
 import { UserState } from "../../types/general";
 
@@ -18,10 +18,8 @@ const userSlice = createSlice({
         state.user.email = action.payload.email;
         state.error = null;
       })
-      .addCase(fetchUser.rejected, (state, action: PayloadAction<unknown>) => {
-        state.error =
-          (action.payload as { message?: string })?.message ||
-          "Fetch user failed";
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.error = action.payload as string;
       });
   },
 });

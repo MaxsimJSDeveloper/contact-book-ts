@@ -1,7 +1,7 @@
+import { api } from "@/api/contactsApi";
+import { Contact, NewContact } from "@/types/general";
+import { handleAxiosError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../../api/contactsApi";
-import { Contact, NewContact } from "../../types/general";
-import { handleAxiosError } from "../../utils/handleAxiosError";
 
 export interface FetchContactsResp {
   data: Contact[];

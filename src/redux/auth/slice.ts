@@ -6,8 +6,8 @@ import {
   RefreshResponse,
   refreshUser,
   register,
-} from "./operations";
-import { AuthState } from "../../types/general";
+} from "@/redux/auth/operations";
+import { AuthState } from "@/types/general";
 
 const initialState: AuthState = {
   token: null,
@@ -33,7 +33,8 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addMatcher(
-        isAnyOf(logIn.fulfilled, refreshUser.fulfilled),
+        isAnyOf(logIn
+          .fulfilled, refreshUser.fulfilled),
         (state, action: PayloadAction<LoginResponse | RefreshResponse>) => {
           state.token = action.payload.accessToken;
           state.isLoggedIn = true;

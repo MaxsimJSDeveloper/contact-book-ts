@@ -1,19 +1,21 @@
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+
+import { selectIsRefreshing } from "@/redux/auth";
+import { fetchUser, selectUser } from "@/redux/user";
+import { useAppDispatch } from "@/redux/hooks";
+
+import { Loader } from "@/components/ui";
+import { Creators } from "@/components/layout";
+
 import css from "./HomePage.module.css";
 
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import Creators from "../../components/Creators/Creators";
-import { selectUser } from "../../redux/user/selectors";
-import { useEffect } from "react";
-import { fetchUser } from "../../redux/user/operations";
-import { selectIsRefreshing } from "../../redux/auth/selectors";
-import Loader from "../../components/Loader/Loader";
-import { useAppDispatch } from "../../redux/hooks";
-
-export default function Home() {
-  const user = useSelector(selectUser);
-  const dispatch = useAppDispatch();
+const Home = () => {
   const isRefreshingUser = useSelector(selectIsRefreshing);
+  const user = useSelector(selectUser);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -41,4 +43,6 @@ export default function Home() {
       </div>
     </HelmetProvider>
   );
-}
+};
+
+export default Home;

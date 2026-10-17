@@ -1,18 +1,19 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import css from "./ContactsPage.module.css";
-import ContactList from "../../components/ContactList/ContactList";
+import { useAppDispatch } from "@/redux/hooks";
 import {
+  fetchContacts,
   selectContacts,
   selectError,
   selectIsLoading,
-} from "../../redux/contacts/selectors";
-import { fetchContacts } from "../../redux/contacts/operations";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import Loader from "../../components/Loader/Loader";
-import AddContactBtn from "../../components/AddContactBtn/AddContactBtn";
-import { useAppDispatch } from "../../redux/hooks";
+} from "@/redux/contacts";
+
+import { Loader } from "@/components/ui";
+import { AddContactBtn, ContactList } from "@/components/contacts";
+
+import css from "./ContactsPage.module.css";
 
 const ContactsPage = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { handleAxiosError } from "../../utils/handleAxiosError";
-import { api } from "../../api/contactsApi";
+import { api } from "@/api/contactsApi";
+import { handleAxiosError } from "@/utils";
 
 export interface FetchUserResponse {
   _id: string;
@@ -17,7 +17,9 @@ export const fetchUser = createAsyncThunk<FetchUserResponse>(
       const { data } = await api.get("/user");
       return data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(handleAxiosError(error, "Failed to fetch user"));
+      return thunkAPI.rejectWithValue(
+        handleAxiosError(error, "Failed to fetch user"),
+      );
     }
-  }
+  },
 );

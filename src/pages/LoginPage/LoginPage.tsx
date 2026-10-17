@@ -1,6 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-
-import LoginForm from "../../components/LoginForm/LoginForm";
+import { LoginForm } from "@/components/auth";
 
 import css from "./LoginPage.module.css";
 

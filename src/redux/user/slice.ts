@@ -1,6 +1,6 @@
+import { fetchUser } from "@/redux/user/operations";
+import { UserState } from "@/types/general";
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUser } from "./operations";
-import { UserState } from "../../types/general";
 
 const initialState: UserState = {
   user: { name: "", email: "" },

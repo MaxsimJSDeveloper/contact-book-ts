@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import { LoginUser, RegisterUser } from "../../types/general";
-import { api, setAuthHeader } from "../../api/contactsApi";
-import { handleAxiosError } from "../../utils/handleAxiosError";
+import { RootState } from "@/redux/store";
+import { LoginUser, RegisterUser } from "@/types/general";
+import { api, setAuthHeader } from "@/api/contactsApi";
+import { handleAxiosError } from "@/utils";
 
 export interface RegisterResponse {
   name: string;
@@ -27,8 +27,9 @@ export const register = createAsyncThunk<RegisterResponse, RegisterUser>(
       const { data } = await api.post("/auth/register", credentials);
       return data.data;
     } catch (error) {
-      
-      return thunkAPI.rejectWithValue(handleAxiosError(error, "Something went wrong"));
+      return thunkAPI.rejectWithValue(
+        handleAxiosError(error, "Something went wrong"),
+      );
     }
   },
 );
@@ -43,7 +44,9 @@ export const logIn = createAsyncThunk<LoginResponse, LoginUser>(
       setAuthHeader(data.data.accessToken);
       return data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(handleAxiosError(error, "Failed to login"));
+      return thunkAPI.rejectWithValue(
+        handleAxiosError(error, "Failed to login"),
+      );
     }
   },
 );

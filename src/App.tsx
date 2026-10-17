@@ -1,25 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
-import { lazy, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
-
-import { selectIsRefreshing } from "./redux/auth/selectors";
-import Layout from "./components/Layout/Layout";
-import { refreshUser } from "./redux/auth/operations";
-import { RestrictedRoute } from "./RestrictedRoute";
-import { PrivateRoute } from "./PrivateRoute";
-import { AppDispatch } from "./redux/store";
-import Loader from "./components/Loader/Loader";
-import Logo from "./components/Logo/Logo";
 import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { lazy, useEffect } from "react";
 
-const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
-const RegisterPage = lazy(() => import("./pages/RegistPage/RegistPage"));
-const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-const ContactsPage = lazy(() => import("./pages/ContactsPage/ContactsPage"));
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
+import { Route, Routes } from "react-router-dom";
+import { RestrictedRoute } from "@/RestrictedRoute";
+import { PrivateRoute } from "@/PrivateRoute";
+
+import { refreshUser, selectIsRefreshing } from "@/redux/auth";
+import { useAppDispatch } from "@/redux/hooks";
+
+import { Loader } from "@/components/ui";
+import { Layout, Logo } from "@/components/layout";
+
+
+const HomePage = lazy(() => import("@/pages/HomePage/HomePage"));
+const RegisterPage = lazy(() => import("@/pages/RegisterPage/RegisterPage"));
+const LoginPage = lazy(() => import("@/pages/LoginPage/LoginPage"));
+const ContactsPage = lazy(() => import("@/pages/ContactsPage/ContactsPage"));
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage/NotFoundPage"));
 
 function App() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const isRefreshingUser = useSelector(selectIsRefreshing);
 
   useEffect(() => {

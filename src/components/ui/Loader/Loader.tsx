@@ -1,11 +1,9 @@
-import { InfinitySpin } from "react-loader-spinner";
-import css from "./Loader.module.css";
+import { Loader2 } from "lucide-react";
 
 export const Loader = () => {
   return (
-    <div className={css.wrap}>
-      <InfinitySpin width="300" color="#00f2ff" />
+    <div className="flex justify-center items-center py-10">
+      <Loader2 className="w-10 h-10 text-brand-accent animate-spin" />
     </div>
   );
 };
-

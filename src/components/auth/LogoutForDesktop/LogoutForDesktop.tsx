@@ -1,41 +1,32 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-
+import { useAppSelector } from "@/redux/hooks";
 import { selectIsLoggedIn } from "@/redux/auth";
 import { ModalLogout } from "@/components/ui";
-
-import css from "./LogoutForDesktop.module.css";
 
 export const LogoutForDesktop = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isDesktop, setIsDesktop] = useState<boolean>(window.innerWidth > 768);
 
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 768);
-    };
-
+    const handleResize = () => setIsDesktop(window.innerWidth > 768);
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleClickOpen = () => {
-    setIsOpen(!isOpen);
-  };
+  if (!isLoggedIn || !isDesktop) return null;
 
-  const handleClickClose = () => {
-    setIsOpen(false);
-  };
-
-  return isLoggedIn && isDesktop ? (
-    <div className={css.wrapper}>
-      <button onClick={handleClickOpen} className={css.button} type="button">
+  return (
+    <div className="flex items-center">
+      <button
+        onClick={() => setIsOpen(true)}
+        className="flex h-10 w-[124px] items-center justify-center rounded-lg bg-[#b31818] text-[18px] leading-relaxed text-[#fafafa] transition-colors hover:bg-[#841c1c]"
+        type="button"
+      >
         Log out
       </button>
-      <ModalLogout isOpen={isOpen} onClose={handleClickClose} />
+      <ModalLogout isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
-  ) : null;
+  );
 };

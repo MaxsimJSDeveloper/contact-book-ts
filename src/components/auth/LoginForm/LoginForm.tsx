@@ -7,8 +7,6 @@ import { useAppDispatch } from "@/redux/hooks";
 import { logIn } from "@/redux/auth";
 import { login } from "@/schemas/validation";
 
-import styles from "@/styles/massage.module.css";
-
 interface UserData {
   email: string;
   password: string;
@@ -16,9 +14,7 @@ interface UserData {
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
-
   const id = useId();
 
   return (
@@ -44,40 +40,47 @@ export const LoginForm = () => {
         actions.resetForm();
       }}
     >
-      <Form className={styles.formContainer}>
-        <label htmlFor={`${id}-e`}>Email</label>
+      <Form className="mx-auto w-full max-w-[570px] rounded-[28px] bg-[#d9ebee] px-6 py-10 md:px-10">
+        <label htmlFor={`${id}-e`} className="font-medium text-gray-800">
+          Email
+        </label>
         <Field
           type="email"
           name="email"
           id={`${id}-e`}
-          className={styles.inputField}
           autoComplete="email"
+          className="mt-2 h-[50px] w-full rounded-xl border-none bg-white px-4 text-gray-800 outline-none focus:ring-2 focus:ring-brand-accent"
         />
-        <div className={styles.wrap}>
+        <div className="min-h-[26px] pt-1">
           <ErrorMessage
             name="email"
             component="span"
-            className={styles.errorMessage}
+            className="text-[12px] text-red-500"
           />
         </div>
 
-        <label htmlFor={`${id}-p`}>Password</label>
+        <label htmlFor={`${id}-p`} className="font-medium text-gray-800">
+          Password
+        </label>
         <Field
           type="password"
           name="password"
           id={`${id}-p`}
-          className={styles.inputField}
           autoComplete="current-password"
+          className="mt-2 h-[50px] w-full rounded-xl border-none bg-white px-4 text-gray-800 outline-none focus:ring-2 focus:ring-brand-accent"
         />
-        <div className={styles.wrap}>
+        <div className="min-h-[26px] pt-1">
           <ErrorMessage
             name="password"
             component="span"
-            className={styles.errorMessage}
+            className="text-[12px] text-red-500"
           />
         </div>
 
-        <button type="submit" className={styles.submitButton}>
+        <button
+          type="submit"
+          className="mt-4 block h-[54px] w-full rounded-2xl bg-brand-accent text-[18px] text-[#f5f5f5] transition-colors hover:bg-[#005e6e]"
+        >
           Log In
         </button>
       </Form>

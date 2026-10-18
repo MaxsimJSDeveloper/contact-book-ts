@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { Menu } from "lucide-react";
 
 import { useAppSelector } from "@/redux/hooks";
 import { selectIsLoggedIn } from "@/redux/auth";
@@ -8,18 +8,13 @@ import { AuthNav, Logout, LogoutForDesktop } from "@/components/auth";
 import { Navigation } from "@/components/layout";
 import { Modal } from "@/components/ui";
 
-import css from "./AppBar.module.css";
-
 export const AppBar = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const [isOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -29,22 +24,19 @@ export const AppBar = () => {
 
   return (
     <header
-      className={`${css.header} ${isLoggedIn ? css.loggedIn : css.loggedOut} ${
-        isMobile ? css.mobile : ""
-      }`}
+      className={`
+        mb-[72px] mt-[37px] ml-auto flex items-center justify-end gap-6
+        md:mx-auto md:mb-[72px] md:mt-[30px] md:w-max md:justify-center md:gap-12 md:rounded-2xl md:bg-brand-accent/85 md:px-10 md:py-3
+      `}
     >
       {isMobile ? (
         <>
-          <RxHamburgerMenu className={css.hamburger} onClick={handleOpen} />
+          <Menu
+            className="h-9 w-9 cursor-pointer text-[#d9ebee]"
+            onClick={handleOpen}
+          />
           <Modal isOpen={isOpen} onClose={handleClose}>
-            <div
-              style={{
-                backgroundColor: "#00242A",
-                borderRadius: 12,
-                padding: 20,
-                width: 150,
-              }}
-            >
+            <div className="w-[150px] rounded-xl bg-[#00242A] p-5">
               <Navigation onLinkClick={handleClose} />
               {!isLoggedIn && <AuthNav onLinkClick={handleClose} />}
               {isLoggedIn && <Logout onClose={handleClose} />}

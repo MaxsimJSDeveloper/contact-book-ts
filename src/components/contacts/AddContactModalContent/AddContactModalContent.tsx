@@ -7,78 +7,85 @@ import { FeedbackSchema } from "@/schemas/validation";
 import { addContact } from "@/redux/contacts";
 import { handleKeyPress } from "@/utils";
 
-import styles from "@/styles/massage.module.css";
-import css from "./AddContactModalContent.module.css";
+interface AddContactModalContentProps {
+  handleClose?: () => void;
+}
 
-export const AddContactModalContent = () => {
+export const AddContactModalContent = ({
+  handleClose,
+}: AddContactModalContentProps) => {
   const id = useId();
-
   const dispatch = useAppDispatch();
 
   return (
-    <>
-      <Formik
-        initialValues={{ username: "", number: "" }}
-        validationSchema={FeedbackSchema}
-        onSubmit={(values, actions) => {
-          const newContact = {
-            name: values.username.trim(),
-            phoneNumber: values.number.trim(),
-            contactType: "home",
-          };
+    <Formik
+      initialValues={{ username: "", number: "" }}
+      validationSchema={FeedbackSchema}
+      onSubmit={(values, actions) => {
+        const newContact = {
+          name: values.username.trim(),
+          phoneNumber: values.number.trim(),
+          contactType: "home", // За замовчуванням зі схеми
+        };
 
-          dispatch(addContact(newContact))
-            .unwrap()
-            .then(() => {
-              toast.success("Successfully add!", { position: "top-center" });
-            })
-            .catch(() => {
-              toast.error("Error, input correct data", {
-                position: "top-center",
-              });
+        dispatch(addContact(newContact))
+          .unwrap()
+          .then(() => {
+            toast.success("Successfully added!", { position: "top-center" });
+            handleClose?.(); // Закриваємо модалку після успіху
+          })
+          .catch(() => {
+            toast.error("Error, input correct data", {
+              position: "top-center",
             });
-          actions.resetForm();
-        }}
-      >
-        <Form className={css.formContainer}>
-          <label htmlFor={`${id}-n`}>Username</label>
-          <Field
-            type="text"
+          });
+        actions.resetForm();
+      }}
+    >
+      <Form className="w-[330px] rounded-[28px] bg-[#d9ebee] px-8 py-10">
+        <label htmlFor={`${id}-n`} className="font-medium text-gray-800">
+          Username
+        </label>
+        <Field
+          type="text"
+          name="username"
+          id={`${id}-n`}
+          className="mt-2 h-10 w-full rounded-xl border-none bg-white px-3 text-gray-800 outline-none focus:ring-2 focus:ring-brand-accent"
+        />
+        <div className="min-h-[26px] pt-1">
+          <ErrorMessage
             name="username"
-            id={`${id}-n`}
-            className={css.inputField}
+            component="span"
+            className="text-[12px] text-red-500"
           />
-          <div className={styles.wrap}>
-            <ErrorMessage
-              name="username"
-              component="span"
-              className={styles.errorMessage}
-            />
-          </div>
+        </div>
 
-          <label htmlFor={`${id}-p`}>Phone</label>
-          <Field
-            type="text"
-            pattern="\d*"
-            onKeyPress={handleKeyPress}
+        <label htmlFor={`${id}-p`} className="font-medium text-gray-800">
+          Phone
+        </label>
+        <Field
+          type="text"
+          pattern="\d*"
+          onKeyPress={handleKeyPress}
+          name="number"
+          id={`${id}-p`}
+          className="mt-2 h-10 w-full rounded-xl border-none bg-white px-3 text-gray-800 outline-none focus:ring-2 focus:ring-brand-accent"
+        />
+        <div className="min-h-[26px] pt-1">
+          <ErrorMessage
             name="number"
-            id={`${id}-p`}
-            className={css.inputField}
+            component="span"
+            className="text-[12px] text-red-500"
           />
-          <div className={styles.wrap}>
-            <ErrorMessage
-              name="number"
-              component="span"
-              className={styles.errorMessage}
-            />
-          </div>
+        </div>
 
-          <button onClick={close} type="submit" className={css.submitButton}>
-            Add contact
-          </button>
-        </Form>
-      </Formik>
-    </>
+        <button
+          type="submit"
+          className="mt-2 h-[54px] w-full rounded-2xl bg-brand-accent text-[18px] text-[#f5f5f5] transition-colors hover:bg-[#005e6e]"
+        >
+          Add contact
+        </button>
+      </Form>
+    </Formik>
   );
 };
-

@@ -5,22 +5,12 @@ interface LogoutProps {
   onClose: () => void;
 }
 
-export const Logout = ({ onClose }: LogoutProps ) => {
+export const Logout = ({ onClose }: LogoutProps) => {
   const dispatch = useAppDispatch();
 
   return (
     <button
-      style={{
-        marginTop: 50,
-        backgroundColor: "inherit",
-        border: "none",
-        display: "flex",
-        alignItems: "center",
-        marginLeft: "auto",
-        marginRight: "auto",
-        fontSize: 24,
-        color: "#fafafa",
-      }}
+      className="mx-auto mt-12 flex w-full items-center justify-center bg-transparent text-[24px] text-[#fafafa] transition-colors hover:text-brand-accent"
       onClick={() => {
         dispatch(logoutUser());
         onClose();
@@ -30,4 +20,3 @@ export const Logout = ({ onClose }: LogoutProps ) => {
     </button>
   );
 };
-

@@ -11,10 +11,8 @@ export const AddContactModal = ({
   handleClose,
 }: AddContactModalProps) => {
   return (
-    <>
-      <Modal isOpen={isOpen} onClose={handleClose}>
-        <AddContactModalContent />
-      </Modal>
-    </>
+    <Modal isOpen={isOpen} onClose={handleClose}>
+      <AddContactModalContent handleClose={handleClose} />
+    </Modal>
   );
 };

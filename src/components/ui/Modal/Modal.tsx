@@ -40,19 +40,17 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[1500] flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-[1500] flex items-center justify-center bg-black/60 backdrop-blur-sm"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
     >
-      <div
-        className="relative flex justify-end rounded-[5px] px-3 py-6 md:px-6 md:py-8"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="relative" onClick={(e) => e.stopPropagation()}>
         <button
-          className="absolute right-2.5 top-2.5 z-[1550] text-[#005358] transition-colors hover:text-brand-accent"
+          className="absolute right-3 top-3 z-[1550] rounded-full p-1 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
           onClick={onClose}
+          type="button"
         >
-          <X className="h-6 w-6" />
+          <X className="h-5 w-5" />
         </button>
         {children}
       </div>

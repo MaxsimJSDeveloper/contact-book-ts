@@ -5,7 +5,7 @@ import {
   fetchContacts,
   updateContact,
 } from "@/redux/contacts";
-import { Contact, ContactsState } from "@/types/general";
+import { Contact, ContactsState, FetchContactsResponse } from "@/types/general";
 
 const initialState: ContactsState = {
   contacts: [],
@@ -21,8 +21,8 @@ const contactsSlice = createSlice({
     builder
       .addCase(
         fetchContacts.fulfilled,
-        (state, action: PayloadAction<Contact[]>) => {
-          state.contacts = action.payload;
+        (state, action: PayloadAction<FetchContactsResponse>) => {
+          state.contacts = action.payload.data;
         },
       )
       .addCase(

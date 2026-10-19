@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { FeedbackSchema } from "@/schemas/validation";
 import { addContact } from "@/redux/contacts";
 import { handleKeyPress } from "@/utils";
+import { NewContact, ContactType } from "@/types/general";
 
 interface AddContactModalContentProps {
   handleClose?: () => void;
@@ -19,27 +20,32 @@ export const AddContactModalContent = ({
 
   return (
     <Formik
-      initialValues={{ username: "", number: "" }}
+      initialValues={{
+        username: "",
+        number: "",
+        contactType: "home" as ContactType,
+      }}
       validationSchema={FeedbackSchema}
       onSubmit={(values, actions) => {
-        const newContact = {
+        const newContact: NewContact = {
           name: values.username.trim(),
           phoneNumber: values.number.trim(),
-          contactType: "home", // За замовчуванням зі схеми
+          contactType: values.contactType,
         };
 
         dispatch(addContact(newContact))
           .unwrap()
           .then(() => {
             toast.success("Successfully added!", { position: "top-center" });
-            handleClose?.(); // Закриваємо модалку після успіху
+            handleClose?.();
+            actions.resetForm();
           })
-          .catch(() => {
+          .catch((err) => {
+            console.error("Add contact error:", err);
             toast.error("Error, input correct data", {
               position: "top-center",
             });
           });
-        actions.resetForm();
       }}
     >
       <Form className="w-[330px] rounded-[28px] bg-[#d9ebee] px-8 py-10">
@@ -78,6 +84,20 @@ export const AddContactModalContent = ({
             className="text-[12px] text-red-500"
           />
         </div>
+
+        <label htmlFor={`${id}-ct`} className="font-medium text-gray-800">
+          Contact Type
+        </label>
+        <Field
+          as="select"
+          name="contactType"
+          id={`${id}-ct`}
+          className="mt-2 h-10 w-full cursor-pointer rounded-xl border-none bg-white px-3 text-gray-800 outline-none focus:ring-2 focus:ring-brand-accent"
+        >
+          <option value="home">Home</option>
+          <option value="personal">Personal</option>
+        </Field>
+        <div className="min-h-[20px]" />
 
         <button
           type="submit"

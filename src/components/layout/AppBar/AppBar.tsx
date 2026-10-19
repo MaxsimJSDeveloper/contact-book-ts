@@ -23,12 +23,7 @@ export const AppBar = () => {
   const handleClose = () => setIsModalOpen(false);
 
   return (
-    <header
-      className={`
-        mb-[72px] mt-[37px] ml-auto flex items-center justify-end gap-6
-        md:mx-auto md:mb-[72px] md:mt-[30px] md:w-max md:justify-center md:gap-12 md:rounded-2xl md:bg-brand-accent/85 md:px-10 md:py-3
-      `}
-    >
+    <header className="relative mb-[72px] mt-[37px] flex items-center justify-end px-6 md:mt-[30px]">
       {isMobile ? (
         <>
           <Menu
@@ -36,7 +31,7 @@ export const AppBar = () => {
             onClick={handleOpen}
           />
           <Modal isOpen={isOpen} onClose={handleClose}>
-            <div className="w-[150px] rounded-xl bg-[#00242A] p-5">
+            <div className="w-[180px] rounded-2xl bg-[#00242A] p-6 pt-10">
               <Navigation onLinkClick={handleClose} />
               {!isLoggedIn && <AuthNav onLinkClick={handleClose} />}
               {isLoggedIn && <Logout onClose={handleClose} />}
@@ -44,11 +39,16 @@ export const AppBar = () => {
           </Modal>
         </>
       ) : (
-        <>
+        <div className="mx-auto flex items-center rounded-2xl bg-brand-accent/85 px-10 py-3 gap-12">
           <Navigation />
           {!isLoggedIn && <AuthNav />}
-          {isLoggedIn && <LogoutForDesktop />}
-        </>
+        </div>
+      )}
+
+      {isLoggedIn && !isMobile && (
+        <div className="hidden md:block md:absolute md:right-[5%] md:top-0">
+          <LogoutForDesktop />
+        </div>
       )}
     </header>
   );

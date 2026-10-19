@@ -32,21 +32,33 @@ export interface ContactsState {
   error: string | null;
 }
 
+export type ContactType = "home" | "personal";
+
 export interface Contact {
   _id: string;
   name: string;
   phoneNumber: string;
-  email: string;
-  isFavourite: boolean;
-  contactType: string;
-  userId: string;
-  photo: string;
-  createdAt: string;
-  updatedAt: string;
+  email?: string;
+  isFavourite?: boolean;
+  contactType: ContactType;
+  userId?: string;
+  photo?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface NewContact {
   name: string;
   phoneNumber: string;
-  contactType: string;
+  contactType: ContactType;
+}
+
+export interface FetchContactsResponse {
+  data: Contact[];
+  page: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
 }

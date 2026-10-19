@@ -1,5 +1,5 @@
 import { api } from "@/api/contactsApi";
-import { Contact, NewContact } from "@/types/general";
+import { Contact, FetchContactsResponse, NewContact } from "@/types/general";
 import { handleAxiosError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -7,7 +7,7 @@ export interface FetchContactsResp {
   data: Contact[];
 }
 
-export const fetchContacts = createAsyncThunk<Contact[]>(
+export const fetchContacts = createAsyncThunk<FetchContactsResponse>(
   "contacts/fetchAll",
   async (_, thunkAPI) => {
     try {

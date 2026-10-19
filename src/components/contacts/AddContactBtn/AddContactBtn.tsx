@@ -7,7 +7,6 @@ export const AddContactBtn = () => {
 
   return (
     <>
-      {/* Додали md:hidden, щоб сховати на десктопі */}
       <button
         onClick={() => setIsModalOpen(true)}
         className="fixed bottom-6 right-6 z-[1000] rounded-lg bg-white text-brand-accent shadow-lg transition-colors hover:text-[#005e6e] md:hidden"

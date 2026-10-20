@@ -13,8 +13,6 @@ import {
 import { Loader } from "@/components/ui";
 import { AddContactBtn, ContactList } from "@/components/contacts";
 
-import css from "./ContactsPage.module.css";
-
 const ContactsPage = () => {
   const dispatch = useAppDispatch();
 
@@ -22,30 +20,22 @@ const ContactsPage = () => {
   const error = useSelector(selectError);
   const loading = useSelector(selectIsLoading);
 
-  // const [startLoad, setStartLoad] = useState(false);
-
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (!loading) setStartLoad(true);
-  // }, [loading]);
-
   return (
-    <>
-      <HelmetProvider>
-        <Helmet>
-          <title>Contacts</title>
-        </Helmet>
-        <main className={css.container}>
-          {error && "Error! Try again"}
-          {loading && <Loader />}
-          <ContactList contacts={contacts} />
-        </main>
-        <AddContactBtn />
-      </HelmetProvider>
-    </>
+    <HelmetProvider>
+      <Helmet>
+        <title>Contacts</title>
+      </Helmet>
+      <main className="mx-auto min-h-[75vh] w-full max-w-[400px] px-4 min-[375px]:px-6 md:max-w-[800px] md:px-12 xl:px-16 2xl:max-w-[1200px]">
+        {error && <p className="text-center text-red-400">Error! Try again</p>}
+        {loading && <Loader />}
+        <ContactList contacts={contacts} />
+      </main>
+      <AddContactBtn />
+    </HelmetProvider>
   );
 };
 

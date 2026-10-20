@@ -1,12 +1,10 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-
-import css from "./RegistPage.module.css";
 import { RegisterForm } from "@/components/auth";
 
 const RegistrationPage = () => {
   return (
     <HelmetProvider>
-      <div className={css.container}>
+      <div className="flex min-h-[75vh] flex-col items-center justify-center px-4">
         <Helmet>
           <title>Registration</title>
         </Helmet>
@@ -14,6 +12,6 @@ const RegistrationPage = () => {
       </div>
     </HelmetProvider>
   );
-}
+};
 
 export default RegistrationPage;

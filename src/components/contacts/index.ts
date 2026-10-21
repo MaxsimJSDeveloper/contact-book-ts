@@ -3,3 +3,5 @@ export { AddContactModal } from "./AddContactModal/AddContactModal";
 export { AddContactModalContent } from "./AddContactModalContent/AddContactModalContent";
 export { ContactItem } from "./ContactItem/ContactItem";
 export { ContactList } from "./ContactList/ContactList";
+export { EditContactModal } from "./EditContactModal/EditContactModal";
+export { ModalDelete } from "./ModalDelete/ModalDelete";

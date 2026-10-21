@@ -51,6 +51,9 @@ export interface NewContact {
   name: string;
   phoneNumber: string;
   contactType: ContactType;
+  isFavourite?: boolean;
+  email?: string;
+  photo?: string;
 }
 
 export interface FetchContactsResponse {

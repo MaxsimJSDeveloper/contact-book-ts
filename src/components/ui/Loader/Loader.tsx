@@ -1,9 +1,9 @@
-import { Loader2 } from "lucide-react";
+// import { Loader2 } from "lucide-react";
 
 export const Loader = () => {
   return (
-    <div className="flex justify-center items-center py-10">
-      <Loader2 className="w-10 h-10 text-brand-accent animate-spin" />
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/20 backdrop-blur-[1px]">
+      <div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-accent border-t-transparent" />
     </div>
   );
 };

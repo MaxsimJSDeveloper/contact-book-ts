@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PlusSquare } from "lucide-react";
+import { Plus } from "lucide-react";
 import { AddContactModal } from "@/components/contacts";
 
 export const AddContactBtn = () => {
@@ -9,10 +9,11 @@ export const AddContactBtn = () => {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="fixed bottom-6 right-6 z-[1000] rounded-lg bg-white text-brand-accent shadow-lg transition-colors hover:text-[#005e6e] md:hidden"
+        className="fixed bottom-6 right-6 z-[1000] flex h-14 w-14 items-center justify-center rounded-full bg-brand-accent text-white shadow-xl transition-all hover:scale-105 hover:bg-[#005e6e] active:scale-95 lg:hidden"
         type="button"
+        aria-label="Add contact"
       >
-        <PlusSquare className="h-12 w-12" strokeWidth={1.5} />
+        <Plus className="h-7 w-7" strokeWidth={2.5} />
       </button>
       <AddContactModal
         isOpen={isOpen}

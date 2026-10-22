@@ -1,6 +1,7 @@
 import { useId } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
+import { ChevronDown } from "lucide-react";
 
 import { useAppDispatch } from "@/redux/hooks";
 import { FeedbackSchema } from "@/schemas/validation";
@@ -111,18 +112,20 @@ export const EditContactModal = ({
           </div>
 
           <label htmlFor={`${id}-ct`} className="font-medium text-gray-800">
-            Type
+            Contact Type
           </label>
-          <Field
-            as="select"
-            name="contactType"
-            id={`${id}-ct`}
-            className="mt-1 h-10 w-full rounded-xl border-none bg-white px-3 outline-none focus:ring-2 focus:ring-brand-accent"
-          >
-            <option value="home">Home</option>
-            <option value="personal">Personal</option>
-          </Field>
-          <div className="min-h-[16px]" />
+          <div className="relative mt-2">
+            <Field
+              as="select"
+              name="contactType"
+              id={`${id}-ct`}
+              className="h-10 w-full cursor-pointer appearance-none rounded-xl border-none bg-white pl-3 pr-10 font-medium text-gray-800 outline-none focus:ring-2 focus:ring-brand-accent"
+            >
+              <option value="home">Home</option>
+              <option value="personal">Personal</option>
+            </Field>
+            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
+          </div>
 
           <button
             type="submit"

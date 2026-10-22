@@ -12,15 +12,14 @@ interface ContactListProps {
 }
 
 export const ContactList = ({ contacts }: ContactListProps) => {
-
   const [deleteModalId, setDeleteModalId] = useState<string | null>(null);
   const [editContact, setEditContact] = useState<Contact | null>(null);
 
   return (
     <div className="w-full">
-
       {contacts.length > 0 ? (
-        <ul className="flex w-full flex-wrap justify-center gap-6 md:justify-start md:gap-x-8 md:gap-y-6">
+        /* CSS Grid с автозаполнением убирает пустые дыры при ресайзе */
+        <ul className="grid w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-5">
           {contacts.map((contact) => (
             <li key={contact._id} className="flex justify-center">
               <ContactItem

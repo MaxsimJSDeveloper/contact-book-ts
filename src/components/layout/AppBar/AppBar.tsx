@@ -23,7 +23,7 @@ export const AppBar = () => {
   const handleClose = () => setIsModalOpen(false);
 
   return (
-    <header className="relative mb-[72px] mt-[37px] flex items-center justify-end px-6 md:mt-[30px]">
+    <header className="relative mb-[36px] mt-[37px] flex items-center justify-end px-6 md:mt-[30px]">
       {isMobile ? (
         <>
           <Menu

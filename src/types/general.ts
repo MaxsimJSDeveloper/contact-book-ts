@@ -28,6 +28,10 @@ export interface LoginUser {
 
 export interface ContactsState {
   contacts: Contact[];
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalItems: number;
   isLoading: boolean;
   error: string | null;
 }

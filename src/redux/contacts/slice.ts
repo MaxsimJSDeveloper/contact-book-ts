@@ -9,6 +9,10 @@ import { Contact, ContactsState, FetchContactsResponse } from "@/types/general";
 
 const initialState: ContactsState = {
   contacts: [],
+  page: 1,
+  perPage: 6,
+  totalPages: 1,
+  totalItems: 0,
   isLoading: false,
   error: null,
 };
@@ -23,20 +27,10 @@ const contactsSlice = createSlice({
         fetchContacts.fulfilled,
         (state, action: PayloadAction<FetchContactsResponse>) => {
           state.contacts = action.payload.data;
-        },
-      )
-      .addCase(
-        addContact.fulfilled,
-        (state, action: PayloadAction<Contact>) => {
-          state.contacts.push(action.payload);
-        },
-      )
-      .addCase(
-        deleteContact.fulfilled,
-        (state, action: PayloadAction<string>) => {
-          state.contacts = state.contacts.filter(
-            (c) => c._id !== action.payload,
-          );
+          state.page = action.payload.page;
+          state.perPage = action.payload.perPage;
+          state.totalPages = action.payload.totalPages;
+          state.totalItems = action.payload.totalItems;
         },
       )
       .addCase(

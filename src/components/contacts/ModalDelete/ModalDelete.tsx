@@ -1,7 +1,13 @@
 import { createPortal } from "react-dom";
 import { useAppDispatch } from "@/redux/hooks";
-import { deleteContact } from "@/redux/contacts";
+import {
+  deleteContact,
+  fetchContacts,
+  selectContacts,
+  selectPage,
+} from "@/redux/contacts";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 interface ModalDeleteProps {
   isOpen: boolean;
@@ -16,12 +22,24 @@ export const ModalDelete = ({
 }: ModalDeleteProps) => {
   const dispatch = useAppDispatch();
 
+  const contacts = useSelector(selectContacts);
+  const currentPage = useSelector(selectPage);
+
   if (!isOpen || !contactId) return null;
 
   const handleDelete = () => {
     dispatch(deleteContact(contactId))
       .unwrap()
-      .then(() => toast.success("Contact deleted!"))
+      .then(() => {
+        toast.success("Contact deleted!");
+
+        const targetPage =
+          contacts.length === 1 && currentPage > 1
+            ? currentPage - 1
+            : currentPage;
+
+        dispatch(fetchContacts({ page: targetPage }));
+      })
       .catch(() => toast.error("Failed to delete contact"));
     onClose();
   };

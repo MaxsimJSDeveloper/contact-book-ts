@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 
 import { useAppDispatch } from "@/redux/hooks";
 import { FeedbackSchema } from "@/schemas/validation";
-import { addContact } from "@/redux/contacts";
+import { addContact, fetchContacts } from "@/redux/contacts";
 import { handleKeyPress } from "@/utils";
 import { NewContact, ContactType } from "@/types/general";
 
@@ -38,6 +38,7 @@ export const AddContactModalContent = ({
           .unwrap()
           .then(() => {
             toast.success("Successfully added!", { position: "top-center" });
+            dispatch(fetchContacts());
             handleClose?.();
             actions.resetForm();
           })

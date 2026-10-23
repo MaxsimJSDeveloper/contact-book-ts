@@ -1,4 +1,5 @@
 import { api } from "@/api/contactsApi";
+import { RootState } from "@/redux/store";
 import { Contact, FetchContactsResponse, NewContact } from "@/types/general";
 import { handleAxiosError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -7,19 +8,27 @@ export interface FetchContactsResp {
   data: Contact[];
 }
 
-export const fetchContacts = createAsyncThunk<FetchContactsResponse>(
-  "contacts/fetchAll",
-  async (_, thunkAPI) => {
-    try {
-      const { data } = await api.get("/contacts");
-      return data.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        handleAxiosError(error, "Contacts not found"),
-      );
-    }
-  },
-);
+export const fetchContacts = createAsyncThunk<
+  FetchContactsResponse,
+  { page?: number; perPage?: number } | undefined
+>("contacts/fetchAll", async (params, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState() as RootState;
+
+    const targetPage = params?.page ?? state.contacts.page;
+    const targetPerPage = params?.perPage ?? state.contacts.perPage;
+
+    const { data } = await api.get(
+      `/contacts?page=${targetPage}&perPage=${targetPerPage}`,
+    );
+
+    return data.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(
+      handleAxiosError(error, "Contacts not found"),
+    );
+  }
+});
 
 export const addContact = createAsyncThunk<Contact, NewContact>(
   "contacts/addContact",

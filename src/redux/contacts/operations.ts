@@ -10,7 +10,15 @@ export interface FetchContactsResp {
 
 export const fetchContacts = createAsyncThunk<
   FetchContactsResponse,
-  { page?: number; perPage?: number } | undefined
+  | {
+      page?: number;
+      perPage?: number;
+      contactType?: "home" | "personal";
+      isFavorite?: boolean;
+      sortBy?: string;
+      sortOrder?: "asc" | "desc";
+    }
+  | undefined
 >("contacts/fetchAll", async (params, thunkAPI) => {
   try {
     const state = thunkAPI.getState() as RootState;
@@ -18,9 +26,31 @@ export const fetchContacts = createAsyncThunk<
     const targetPage = params?.page ?? state.contacts.page;
     const targetPerPage = params?.perPage ?? state.contacts.perPage;
 
-    const { data } = await api.get(
-      `/contacts?page=${targetPage}&perPage=${targetPerPage}`,
-    );
+    const targetType =
+      params?.contactType !== undefined
+        ? params.contactType
+        : state.contacts.filter.contactType;
+
+    const targetFav =
+      params?.isFavorite !== undefined
+        ? params.isFavorite
+        : state.contacts.filter.isFavorite;
+
+    const targetSortBy = params?.sortBy ?? state.contacts.sort.sortBy;
+    const targetSortOrder = params?.sortOrder ?? state.contacts.sort.sortOrder;
+
+    const query = new URLSearchParams({
+      page: String(targetPage),
+      perPage: String(targetPerPage),
+      sortBy: targetSortBy,
+      sortOrder: targetSortOrder,
+    });
+
+    if (targetType) query.append("contactType", targetType);
+    if (typeof targetFav === "boolean")
+      query.append("isFavorite", String(targetFav));
+
+    const { data } = await api.get(`/contacts?${query.toString()}`);
 
     return data.data;
   } catch (error) {

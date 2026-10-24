@@ -15,13 +15,13 @@ export const ContactItem = ({
   onEdit,
   onDelete,
 }: ContactItemProps) => {
-  const { _id, name, phoneNumber, email, isFavourite, contactType } =
+  const { _id, name, phoneNumber, email, isFavorite, contactType } =
     contactInfo;
   const dispatch = useAppDispatch();
 
   const handleToggleFavourite = () => {
     dispatch(
-      updateContact({ id: _id, contactData: { isFavourite: !isFavourite } }),
+      updateContact({ id: _id, contactData: { isFavorite: !isFavorite } }),
     );
   };
 
@@ -50,7 +50,7 @@ export const ContactItem = ({
         >
           <Star
             className="h-4 w-4"
-            fill={isFavourite ? "currentColor" : "none"}
+            fill={isFavorite ? "currentColor" : "none"}
           />
         </button>
       </div>

@@ -13,6 +13,14 @@ const initialState: ContactsState = {
   perPage: 6,
   totalPages: 1,
   totalItems: 0,
+  filter: {
+    contactType: undefined,
+    isFavorite: undefined,
+  },
+  sort: {
+    sortBy: "name",
+    sortOrder: "asc",
+  },
   isLoading: false,
   error: null,
 };
@@ -20,7 +28,23 @@ const initialState: ContactsState = {
 const contactsSlice = createSlice({
   name: "contacts",
   initialState,
-  reducers: {},
+  reducers: {
+    setContactTypeFilter(
+      state,
+      action: PayloadAction<"home" | "personal" | undefined>,
+    ) {
+      state.filter.contactType = action.payload;
+    },
+    setIsFavoriteFilter(state, action: PayloadAction<boolean | undefined>) {
+      state.filter.isFavorite = action.payload;
+    },
+    setSortParams(
+      state,
+      action: PayloadAction<{ sortBy: string; sortOrder: "asc" | "desc" }>,
+    ) {
+      state.sort = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(
@@ -86,4 +110,6 @@ const contactsSlice = createSlice({
   },
 });
 
+export const { setContactTypeFilter, setIsFavoriteFilter, setSortParams } =
+  contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

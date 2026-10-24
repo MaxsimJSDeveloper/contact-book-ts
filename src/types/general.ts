@@ -32,6 +32,14 @@ export interface ContactsState {
   perPage: number;
   totalPages: number;
   totalItems: number;
+  filter: {
+    contactType?: "home" | "personal";
+    isFavorite?: boolean;
+  };
+  sort: {
+    sortBy: string;
+    sortOrder: "asc" | "desc";
+  };
   isLoading: boolean;
   error: string | null;
 }
@@ -43,7 +51,7 @@ export interface Contact {
   name: string;
   phoneNumber: string;
   email?: string;
-  isFavourite?: boolean;
+  isFavorite?: boolean;
   contactType: ContactType;
   userId?: string;
   photo?: string;
@@ -55,7 +63,7 @@ export interface NewContact {
   name: string;
   phoneNumber: string;
   contactType: ContactType;
-  isFavourite?: boolean;
+  isFavorite?: boolean;
   email?: string;
   photo?: string;
 }

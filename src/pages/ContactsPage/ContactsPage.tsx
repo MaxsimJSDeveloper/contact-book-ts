@@ -19,9 +19,9 @@ import {
   ContactList,
   AddContactModalContent,
 } from "@/components/contacts";
+import { ContactFilters } from "@/components/contacts/ContactFilters/ContactFilters";
 
 const getResponsivePerPage = () => {
-  if (window.innerWidth >= 1024) return 9;
   if (window.innerWidth >= 768) return 6;
   return 3;
 };
@@ -77,6 +77,8 @@ const ContactsPage = () => {
 
         <div className="flex flex-1 flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex w-full flex-1 flex-col min-h-[580px]">
+            <ContactFilters />
+
             <ContactList contacts={contacts} />
 
             <Pagination

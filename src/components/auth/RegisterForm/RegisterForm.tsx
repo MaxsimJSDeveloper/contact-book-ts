@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useAppDispatch } from "@/redux/hooks";
 import { register } from "@/redux/auth";
 import { registration } from "@/schemas/validation";
+import { PasswordField } from "@/components/ui";
 
 export const RegisterForm = () => {
   const dispatch = useAppDispatch();
@@ -74,23 +75,7 @@ export const RegisterForm = () => {
           />
         </div>
 
-        <label htmlFor={`${id}-p`} className="font-medium text-gray-800">
-          Password
-        </label>
-        <Field
-          type="password"
-          name="password"
-          id={`${id}-p`}
-          autoComplete="current-password"
-          className="mt-2 h-[50px] w-full rounded-xl border-none bg-white px-4 text-gray-800 outline-none focus:ring-2 focus:ring-brand-accent"
-        />
-        <div className="min-h-[26px] pt-1">
-          <ErrorMessage
-            name="password"
-            component="span"
-            className="text-[12px] text-red-500"
-          />
-        </div>
+        <PasswordField id={`${id}-p`} autoComplete="new-password" />
 
         <button
           type="submit"

@@ -26,9 +26,7 @@ export const ContactItem = ({
   };
 
   return (
-    /* w-full позволяет гриду плавно управлять шириной карточки */
     <div className="relative flex w-full flex-col justify-between rounded-2xl bg-[#d9ebee] p-3.5 shadow-sm transition-all hover:shadow-md">
-      {/* 1. Шапка: Аватарка + Имя + Звездочка */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2.5">
           <div
@@ -55,7 +53,6 @@ export const ContactItem = ({
         </button>
       </div>
 
-      {/* 2. Основные данные: Телефон (четко выделен) и Email */}
       <div className="my-3 flex flex-col gap-1.5 text-[13px] font-medium text-gray-700">
         <div className="flex items-center gap-2">
           <Phone className="h-3.5 w-3.5 shrink-0 text-brand-accent" />
@@ -71,7 +68,6 @@ export const ContactItem = ({
         )}
       </div>
 
-      {/* 3. Подвал: Тег типа контактов + Кнопки действий */}
       <div className="flex items-center justify-between border-t border-black/5 pt-2">
         <span className="flex items-center gap-1 rounded-md bg-white/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-accent">
           {contactType === "home" ? (

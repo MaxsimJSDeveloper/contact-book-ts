@@ -33,8 +33,7 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addMatcher(
-        isAnyOf(logIn
-          .fulfilled, refreshUser.fulfilled),
+        isAnyOf(logIn.fulfilled, refreshUser.fulfilled),
         (state, action: PayloadAction<LoginResponse | RefreshResponse>) => {
           state.token = action.payload.accessToken;
           state.isLoggedIn = true;

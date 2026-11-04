@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/redux/hooks";
-import { RootState } from "@/redux/store";
 import {
   fetchContacts,
+  selectFilter,
+  selectSort,
   setContactTypeFilter,
   setIsFavoriteFilter,
   setSortParams,
@@ -11,10 +12,9 @@ import { Star, ChevronDown, ArrowUpDown } from "lucide-react";
 
 export const ContactFilters = () => {
   const dispatch = useAppDispatch();
-  const filter = useSelector((state: RootState) => state.contacts.filter);
-  const sort = useSelector((state: RootState) => state.contacts.sort);
+  const filter = useSelector(selectFilter);
+  const sort = useSelector(selectSort);
 
-  // При зміні будь-якого фільтра завжди скидаємо на 1-шу сторінку!
   const handleTypeChange = (value: string) => {
     const type = value === "all" ? undefined : (value as "home" | "personal");
     dispatch(setContactTypeFilter(type));
@@ -35,9 +35,7 @@ export const ContactFilters = () => {
 
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-[#00242a]/30 p-3 backdrop-blur-md">
-      {/* Ліва група: Фільтри */}
       <div className="flex flex-wrap items-center gap-2">
-        {/* Фільтр за типом */}
         <div className="relative">
           <select
             value={filter.contactType || "all"}
@@ -51,7 +49,6 @@ export const ContactFilters = () => {
           <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600" />
         </div>
 
-        {/* Кнопка "Тільки обрані" */}
         <button
           onClick={handleFavouriteToggle}
           type="button"
@@ -69,7 +66,6 @@ export const ContactFilters = () => {
         </button>
       </div>
 
-      {/* Права група: Сортування */}
       <div className="flex items-center gap-2">
         <div className="relative">
           <select

@@ -12,7 +12,6 @@ import { useAppDispatch } from "@/redux/hooks";
 import { Loader } from "@/components/ui";
 import { Layout, Logo } from "@/components/layout";
 
-
 const HomePage = lazy(() => import("@/pages/HomePage/HomePage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage/RegisterPage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage/LoginPage"));

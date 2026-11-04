@@ -18,7 +18,6 @@ export const ContactList = ({ contacts }: ContactListProps) => {
   return (
     <div className="w-full">
       {contacts.length > 0 ? (
-        /* CSS Grid с автозаполнением убирает пустые дыры при ресайзе */
         <ul className="grid w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-5">
           {contacts.map((contact) => (
             <li key={contact._id} className="flex justify-center">

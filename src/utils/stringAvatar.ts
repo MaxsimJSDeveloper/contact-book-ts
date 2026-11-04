@@ -1,6 +1,5 @@
 import { stringToColor } from "@/utils/stringToColor";
 
-
 export function stringAvatar(name: string) {
   const nameParts = name.split(" ");
   let initials = "";

@@ -6,3 +6,6 @@ export const selectError = (state: RootState) => state.contacts.error;
 
 export const selectPage = (state: RootState) => state.contacts.page;
 export const selectTotalPages = (state: RootState) => state.contacts.totalPages;
+
+export const selectFilter = (state: RootState) => state.contacts.filter;
+export const selectSort = (state: RootState) => state.contacts.sort;

@@ -20,6 +20,7 @@ import {
   AddContactModalContent,
 } from "@/components/contacts";
 import { ContactFilters } from "@/components/contacts/ContactFilters/ContactFilters";
+import { SearchBox } from "@/components/contacts/SearchBox/SearchBox";
 
 const getResponsivePerPage = () => {
   if (window.innerWidth >= 768) return 6;
@@ -40,7 +41,6 @@ const ContactsPage = () => {
   useEffect(() => {
     dispatch(fetchContacts({ page, perPage: getResponsivePerPage() }));
   }, [dispatch, page]);
-
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -77,10 +77,12 @@ const ContactsPage = () => {
 
         <div className="flex flex-1 flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex w-full flex-1 flex-col min-h-[580px]">
+            <div className="mb-4 block lg:hidden">
+              <SearchBox />
+            </div>
+
             <ContactFilters />
-
             <ContactList contacts={contacts} />
-
             <Pagination
               currentPage={page}
               totalPages={totalPages}
@@ -90,7 +92,8 @@ const ContactsPage = () => {
             />
           </div>
 
-          <div className="hidden shrink-0 lg:sticky lg:top-24 lg:flex lg:w-[330px]">
+          <div className="hidden shrink-0 flex-col gap-5 lg:sticky lg:top-24 lg:flex lg:w-[330px]">
+            <SearchBox />
             <AddContactModalContent />
           </div>
         </div>

@@ -15,6 +15,7 @@ export const fetchContacts = createAsyncThunk<
       perPage?: number;
       contactType?: "home" | "personal";
       isFavorite?: boolean;
+      name?: string;
       sortBy?: string;
       sortOrder?: "asc" | "desc";
     }
@@ -49,6 +50,10 @@ export const fetchContacts = createAsyncThunk<
     if (targetType) query.append("contactType", targetType);
     if (typeof targetFav === "boolean")
       query.append("isFavorite", String(targetFav));
+    const targetName =
+      params?.name !== undefined ? params.name : state.contacts.filter.name;
+
+    if (targetName) query.append("name", targetName);
 
     const { data } = await api.get(`/contacts?${query.toString()}`);
 

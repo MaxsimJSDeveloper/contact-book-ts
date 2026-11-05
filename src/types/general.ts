@@ -35,6 +35,7 @@ export interface ContactsState {
   filter: {
     contactType?: "home" | "personal";
     isFavorite?: boolean;
+    name?: string;
   };
   sort: {
     sortBy: string;

@@ -16,6 +16,7 @@ const initialState: ContactsState = {
   filter: {
     contactType: undefined,
     isFavorite: undefined,
+    name: "",
   },
   sort: {
     sortBy: "name",
@@ -37,6 +38,9 @@ const contactsSlice = createSlice({
     },
     setIsFavoriteFilter(state, action: PayloadAction<boolean | undefined>) {
       state.filter.isFavorite = action.payload;
+    },
+    setNameFilter(state, action: PayloadAction<string>) {
+      state.filter.name = action.payload;
     },
     setSortParams(
       state,
@@ -110,6 +114,6 @@ const contactsSlice = createSlice({
   },
 });
 
-export const { setContactTypeFilter, setIsFavoriteFilter, setSortParams } =
+export const { setContactTypeFilter, setIsFavoriteFilter, setSortParams, setNameFilter } =
   contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

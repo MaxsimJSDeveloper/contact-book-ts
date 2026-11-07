@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@/redux/store";
-import { LoginUser, RegisterUser } from "@/types/general";
+import { ConfirmOAuthPayload, LoginUser, RegisterUser } from "@/types/general";
 import { api, setAuthHeader } from "@/api/contactsApi";
 import { handleAxiosError } from "@/utils";
 
@@ -75,3 +75,21 @@ export const logoutUser = createAsyncThunk("auth/logout", async () => {
   });
   return data.data;
 });
+
+export const confirmGoogleOAuth = createAsyncThunk<LoginResponse, ConfirmOAuthPayload>(
+  "auth/confirmOAuth",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await api.post("/auth/confirm-oauth", payload, {
+        withCredentials: true,
+      });
+
+      setAuthHeader(data.data.accessToken);
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        handleAxiosError(error, "Failed to authenticate with Google")
+      );
+    }
+  }
+);

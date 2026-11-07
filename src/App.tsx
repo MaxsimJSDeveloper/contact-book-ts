@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { lazy, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 
 import { Route, Routes } from "react-router-dom";
 import { RestrictedRoute } from "@/RestrictedRoute";
@@ -17,6 +17,9 @@ const RegisterPage = lazy(() => import("@/pages/RegisterPage/RegisterPage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage/LoginPage"));
 const ContactsPage = lazy(() => import("@/pages/ContactsPage/ContactsPage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage/NotFoundPage"));
+const GoogleCallbackPage = lazy(
+  () => import("@/pages/GoogleCallbackPage/GoogleCallbackPage"),
+);
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,30 +34,33 @@ function App() {
   ) : (
     <>
       <Logo />
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route
-            path="/register"
-            element={
-              <RestrictedRoute redirectTo="/login" component={RegisterPage} />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <RestrictedRoute redirectTo="/contacts" component={LoginPage} />
-            }
-          />
-          <Route
-            path="/contacts"
-            element={
-              <PrivateRoute redirectTo="/login" component={ContactsPage} />
-            }
-          />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route
+              path="/register"
+              element={
+                <RestrictedRoute redirectTo="/login" component={RegisterPage} />
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <RestrictedRoute redirectTo="/contacts" component={LoginPage} />
+              }
+            />
+            <Route
+              path="/contacts"
+              element={
+                <PrivateRoute redirectTo="/login" component={ContactsPage} />
+              }
+            />
+          </Route>
+          <Route element={<GoogleCallbackPage />} path="/confirm-oauth" />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
       <Toaster position="top-center" reverseOrder={false} />
     </>
   );

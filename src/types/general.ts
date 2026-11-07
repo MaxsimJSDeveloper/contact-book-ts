@@ -78,3 +78,7 @@ export interface FetchContactsResponse {
   hasPreviousPage: boolean;
   hasNextPage: boolean;
 }
+
+export interface ConfirmOAuthPayload {
+  code: string;
+}

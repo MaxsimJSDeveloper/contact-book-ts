@@ -1,5 +1,6 @@
 import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import {
+  confirmGoogleOAuth,
   logIn,
   LoginResponse,
   logoutUser,
@@ -33,14 +34,14 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addMatcher(
-        isAnyOf(logIn.fulfilled, refreshUser.fulfilled),
+        isAnyOf(logIn.fulfilled, refreshUser.fulfilled, confirmGoogleOAuth.fulfilled),
         (state, action: PayloadAction<LoginResponse | RefreshResponse>) => {
           state.token = action.payload.accessToken;
           state.isLoggedIn = true;
         },
       )
       .addMatcher(
-        isAnyOf(refreshUser.fulfilled, refreshUser.rejected),
+        isAnyOf(refreshUser.fulfilled, refreshUser.rejected, confirmGoogleOAuth.rejected),
         (state) => {
           state.isRefreshing = false;
         },
@@ -51,6 +52,7 @@ const authSlice = createSlice({
           logIn.pending,
           refreshUser.pending,
           logoutUser.pending,
+          confirmGoogleOAuth.pending,
         ),
         (state) => {
           state.error = null;

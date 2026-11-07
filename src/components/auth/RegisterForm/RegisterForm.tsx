@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { register } from "@/redux/auth";
 import { registration } from "@/schemas/validation";
 import { PasswordField } from "@/components/ui";
+import { GoogleAuthBtn } from "../GoogleAuthBtn/GoogleAuthBtn";
 
 export const RegisterForm = () => {
   const dispatch = useAppDispatch();
@@ -83,6 +84,14 @@ export const RegisterForm = () => {
         >
           Register
         </button>
+        <div className="relative mt-6 flex items-center justify-center">
+          <span className="absolute bg-[#d9ebee] px-2 text-sm text-gray-500">
+            OR
+          </span>
+          <div className="h-px w-full bg-gray-300"></div>
+        </div>
+
+        <GoogleAuthBtn />
       </Form>
     </Formik>
   );

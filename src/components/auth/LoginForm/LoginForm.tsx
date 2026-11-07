@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { logIn } from "@/redux/auth";
 import { login } from "@/schemas/validation";
 import { PasswordField } from "@/components/ui";
+import { GoogleAuthBtn } from "../GoogleAuthBtn/GoogleAuthBtn";
 
 interface UserData {
   email: string;
@@ -68,6 +69,14 @@ export const LoginForm = () => {
         >
           Log In
         </button>
+        <div className="relative mt-6 flex items-center justify-center">
+          <span className="absolute bg-[#d9ebee] px-2 text-sm text-gray-500">
+            OR
+          </span>
+          <div className="h-px w-full bg-gray-300"></div>
+        </div>
+
+        <GoogleAuthBtn />
       </Form>
     </Formik>
   );

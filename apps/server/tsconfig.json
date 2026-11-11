@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@generated/*": ["./src/generated/*"],
+      "@prisma-service/*": ["./src/prisma/*"],
+      "@contacts/*": ["./src/contacts/*"]
+    },
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "declaration": true,

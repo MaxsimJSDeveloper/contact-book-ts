@@ -1,12 +1,12 @@
-// src/contacts/dto/create-contact.dto.ts
+import { ContactType } from '@/generated/prisma/enums';
 import {
   IsString,
   IsNotEmpty,
   IsOptional,
   IsEmail,
   IsEnum,
+  IsBoolean,
 } from 'class-validator';
-import { ContactType } from '../../generated/prisma/enums';
 
 export class CreateContactDto {
   @IsString()
@@ -17,9 +17,13 @@ export class CreateContactDto {
   @IsNotEmpty({ message: 'Phone number is a required field' })
   phoneNumber!: string;
 
-  @IsEmail({},{ message: 'Invalid email format' })
+  @IsEmail({}, { message: 'Invalid email format' })
   @IsOptional()
   email?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  isFavorite?: boolean;
 
   @IsEnum(ContactType)
   @IsOptional()

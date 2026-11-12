@@ -29,7 +29,7 @@ export type ContactMinAggregateOutputType = {
   name: string | null
   phoneNumber: string | null
   email: string | null
-  isFavourite: boolean | null
+  isFavorite: boolean | null
   contactType: $Enums.ContactType | null
   photo: string | null
   userId: string | null
@@ -42,7 +42,7 @@ export type ContactMaxAggregateOutputType = {
   name: string | null
   phoneNumber: string | null
   email: string | null
-  isFavourite: boolean | null
+  isFavorite: boolean | null
   contactType: $Enums.ContactType | null
   photo: string | null
   userId: string | null
@@ -55,7 +55,7 @@ export type ContactCountAggregateOutputType = {
   name: number
   phoneNumber: number
   email: number
-  isFavourite: number
+  isFavorite: number
   contactType: number
   photo: number
   userId: number
@@ -70,7 +70,7 @@ export type ContactMinAggregateInputType = {
   name?: true
   phoneNumber?: true
   email?: true
-  isFavourite?: true
+  isFavorite?: true
   contactType?: true
   photo?: true
   userId?: true
@@ -83,7 +83,7 @@ export type ContactMaxAggregateInputType = {
   name?: true
   phoneNumber?: true
   email?: true
-  isFavourite?: true
+  isFavorite?: true
   contactType?: true
   photo?: true
   userId?: true
@@ -96,7 +96,7 @@ export type ContactCountAggregateInputType = {
   name?: true
   phoneNumber?: true
   email?: true
-  isFavourite?: true
+  isFavorite?: true
   contactType?: true
   photo?: true
   userId?: true
@@ -182,7 +182,7 @@ export type ContactGroupByOutputType = {
   name: string
   phoneNumber: string
   email: string | null
-  isFavourite: boolean
+  isFavorite: boolean
   contactType: $Enums.ContactType
   photo: string | null
   userId: string
@@ -216,7 +216,7 @@ export type ContactWhereInput = {
   name?: Prisma.StringFilter<"Contact"> | string
   phoneNumber?: Prisma.StringFilter<"Contact"> | string
   email?: Prisma.StringNullableFilter<"Contact"> | string | null
-  isFavourite?: Prisma.BoolFilter<"Contact"> | boolean
+  isFavorite?: Prisma.BoolFilter<"Contact"> | boolean
   contactType?: Prisma.EnumContactTypeFilter<"Contact"> | $Enums.ContactType
   photo?: Prisma.StringNullableFilter<"Contact"> | string | null
   userId?: Prisma.StringFilter<"Contact"> | string
@@ -230,7 +230,7 @@ export type ContactOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
-  isFavourite?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   contactType?: Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -247,7 +247,7 @@ export type ContactWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Contact"> | string
   phoneNumber?: Prisma.StringFilter<"Contact"> | string
   email?: Prisma.StringNullableFilter<"Contact"> | string | null
-  isFavourite?: Prisma.BoolFilter<"Contact"> | boolean
+  isFavorite?: Prisma.BoolFilter<"Contact"> | boolean
   contactType?: Prisma.EnumContactTypeFilter<"Contact"> | $Enums.ContactType
   photo?: Prisma.StringNullableFilter<"Contact"> | string | null
   userId?: Prisma.StringFilter<"Contact"> | string
@@ -261,7 +261,7 @@ export type ContactOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
-  isFavourite?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   contactType?: Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -280,7 +280,7 @@ export type ContactScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Contact"> | string
   phoneNumber?: Prisma.StringWithAggregatesFilter<"Contact"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
-  isFavourite?: Prisma.BoolWithAggregatesFilter<"Contact"> | boolean
+  isFavorite?: Prisma.BoolWithAggregatesFilter<"Contact"> | boolean
   contactType?: Prisma.EnumContactTypeWithAggregatesFilter<"Contact"> | $Enums.ContactType
   photo?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Contact"> | string
@@ -293,7 +293,7 @@ export type ContactCreateInput = {
   name: string
   phoneNumber: string
   email?: string | null
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: $Enums.ContactType
   photo?: string | null
   createdAt?: Date | string
@@ -306,7 +306,7 @@ export type ContactUncheckedCreateInput = {
   name: string
   phoneNumber: string
   email?: string | null
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: $Enums.ContactType
   photo?: string | null
   userId: string
@@ -319,7 +319,7 @@ export type ContactUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isFavourite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactType?: Prisma.EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -332,7 +332,7 @@ export type ContactUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isFavourite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactType?: Prisma.EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -345,7 +345,7 @@ export type ContactCreateManyInput = {
   name: string
   phoneNumber: string
   email?: string | null
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: $Enums.ContactType
   photo?: string | null
   userId: string
@@ -358,7 +358,7 @@ export type ContactUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isFavourite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactType?: Prisma.EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -370,7 +370,7 @@ export type ContactUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isFavourite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactType?: Prisma.EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -393,7 +393,7 @@ export type ContactCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  isFavourite?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   contactType?: Prisma.SortOrder
   photo?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -406,7 +406,7 @@ export type ContactMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  isFavourite?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   contactType?: Prisma.SortOrder
   photo?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -419,7 +419,7 @@ export type ContactMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  isFavourite?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   contactType?: Prisma.SortOrder
   photo?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -482,7 +482,7 @@ export type ContactCreateWithoutUserInput = {
   name: string
   phoneNumber: string
   email?: string | null
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: $Enums.ContactType
   photo?: string | null
   createdAt?: Date | string
@@ -494,7 +494,7 @@ export type ContactUncheckedCreateWithoutUserInput = {
   name: string
   phoneNumber: string
   email?: string | null
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: $Enums.ContactType
   photo?: string | null
   createdAt?: Date | string
@@ -535,7 +535,7 @@ export type ContactScalarWhereInput = {
   name?: Prisma.StringFilter<"Contact"> | string
   phoneNumber?: Prisma.StringFilter<"Contact"> | string
   email?: Prisma.StringNullableFilter<"Contact"> | string | null
-  isFavourite?: Prisma.BoolFilter<"Contact"> | boolean
+  isFavorite?: Prisma.BoolFilter<"Contact"> | boolean
   contactType?: Prisma.EnumContactTypeFilter<"Contact"> | $Enums.ContactType
   photo?: Prisma.StringNullableFilter<"Contact"> | string | null
   userId?: Prisma.StringFilter<"Contact"> | string
@@ -548,7 +548,7 @@ export type ContactCreateManyUserInput = {
   name: string
   phoneNumber: string
   email?: string | null
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: $Enums.ContactType
   photo?: string | null
   createdAt?: Date | string
@@ -560,7 +560,7 @@ export type ContactUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isFavourite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactType?: Prisma.EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -572,7 +572,7 @@ export type ContactUncheckedUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isFavourite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactType?: Prisma.EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -584,7 +584,7 @@ export type ContactUncheckedUpdateManyWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isFavourite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactType?: Prisma.EnumContactTypeFieldUpdateOperationsInput | $Enums.ContactType
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -598,7 +598,7 @@ export type ContactSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   phoneNumber?: boolean
   email?: boolean
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: boolean
   photo?: boolean
   userId?: boolean
@@ -612,7 +612,7 @@ export type ContactSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   phoneNumber?: boolean
   email?: boolean
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: boolean
   photo?: boolean
   userId?: boolean
@@ -626,7 +626,7 @@ export type ContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   phoneNumber?: boolean
   email?: boolean
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: boolean
   photo?: boolean
   userId?: boolean
@@ -640,7 +640,7 @@ export type ContactSelectScalar = {
   name?: boolean
   phoneNumber?: boolean
   email?: boolean
-  isFavourite?: boolean
+  isFavorite?: boolean
   contactType?: boolean
   photo?: boolean
   userId?: boolean
@@ -648,7 +648,7 @@ export type ContactSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phoneNumber" | "email" | "isFavourite" | "contactType" | "photo" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["contact"]>
+export type ContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phoneNumber" | "email" | "isFavorite" | "contactType" | "photo" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["contact"]>
 export type ContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -669,7 +669,7 @@ export type $ContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     name: string
     phoneNumber: string
     email: string | null
-    isFavourite: boolean
+    isFavorite: boolean
     contactType: $Enums.ContactType
     photo: string | null
     userId: string
@@ -1103,7 +1103,7 @@ export interface ContactFieldRefs {
   readonly name: Prisma.FieldRef<"Contact", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"Contact", 'String'>
   readonly email: Prisma.FieldRef<"Contact", 'String'>
-  readonly isFavourite: Prisma.FieldRef<"Contact", 'Boolean'>
+  readonly isFavorite: Prisma.FieldRef<"Contact", 'Boolean'>
   readonly contactType: Prisma.FieldRef<"Contact", 'ContactType'>
   readonly photo: Prisma.FieldRef<"Contact", 'String'>
   readonly userId: Prisma.FieldRef<"Contact", 'String'>

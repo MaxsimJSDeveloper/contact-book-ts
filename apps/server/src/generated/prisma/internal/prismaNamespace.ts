@@ -623,7 +623,7 @@ export const ContactScalarFieldEnum = {
   name: 'name',
   phoneNumber: 'phoneNumber',
   email: 'email',
-  isFavourite: 'isFavourite',
+  isFavorite: 'isFavorite',
   contactType: 'contactType',
   photo: 'photo',
   userId: 'userId',

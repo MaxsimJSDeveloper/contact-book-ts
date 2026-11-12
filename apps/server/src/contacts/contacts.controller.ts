@@ -20,6 +20,11 @@ export class ContactsController {
     return this.contactsService.getAllContacts();
   }
 
+  @Get(':id')
+  async getOne(@Param('id') id: string) {
+    return this.contactsService.getContactById(id);
+  }
+
   @Post()
   async create(@Body() dto: CreateContactDto) {
     return this.contactsService.createContact(dto);

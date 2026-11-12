@@ -32,7 +32,7 @@ model Contact {
   name        String
   phoneNumber String
   email       String?
-  isFavourite Boolean     @default(false)
+  isFavorite Boolean     @default(false)
   contactType ContactType @default(personal)
   photo       String?
   userId      String

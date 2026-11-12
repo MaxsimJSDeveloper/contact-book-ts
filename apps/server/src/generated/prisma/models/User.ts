@@ -30,6 +30,7 @@ export type UserMinAggregateOutputType = {
   password: string | null
   name: string | null
   avatarUrl: string | null
+  createdAt: Date | null
   updatedAt: Date | null
 }
 

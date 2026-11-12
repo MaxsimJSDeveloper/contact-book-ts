@@ -6,6 +6,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    credentials: true,
+  });
+
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(
@@ -17,11 +22,6 @@ async function bootstrap() {
   );
 
   app.use(cookieParser());
-
-  app.enableCors({
-    origin: process.env.APP_DOMAIN || 'http://localhost:5173',
-    credentials: true,
-  });
 
   const port = process.env.PORT || 3000;
   await app.listen(port);

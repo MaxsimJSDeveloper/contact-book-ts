@@ -9,7 +9,7 @@
     "build:client": "npm run build --workspace=apps/client",
     "dev:server": "npm run start:dev --workspace=apps/server",
     "build:server": "npm run generate --workspace=apps/server && npm run build --workspace=apps/server",
-    "start:server": "node apps/server/dist/main",
+    "start:server": "npm run start:prod --workspace=apps/server",
     "lint": "npx oxlint"
   },
   "devDependencies": {

@@ -469,10 +469,6 @@ export type ContactUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type EnumContactTypeFieldUpdateOperationsInput = {
   set?: $Enums.ContactType
 }

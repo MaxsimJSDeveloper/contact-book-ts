@@ -10,9 +10,27 @@
 */
 
 export const ContactType = {
+  personal: 'personal',
   work: 'work',
-  home: 'home',
-  personal: 'personal'
+  family: 'family',
+  other: 'other'
 } as const
 
 export type ContactType = (typeof ContactType)[keyof typeof ContactType]
+
+
+export const AuthProvider = {
+  LOCAL: 'LOCAL',
+  GOOGLE: 'GOOGLE'
+} as const
+
+export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
+
+
+export const TokenType = {
+  EMAIL_VERIFICATION: 'EMAIL_VERIFICATION',
+  PASSWORD_RESET: 'PASSWORD_RESET',
+  TWO_FACTOR: 'TWO_FACTOR'
+} as const
+
+export type TokenType = (typeof TokenType)[keyof typeof TokenType]

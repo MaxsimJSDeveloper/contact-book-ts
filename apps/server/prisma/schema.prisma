@@ -1,30 +1,54 @@
 generator client {
-  provider     = "prisma-client"
-  output       = "../src/generated/prisma"
-  moduleFormat = "cjs"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  password  String?
-  name      String
-  avatarUrl String?
-  contacts  Contact[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  @@map("users")
+enum ContactType {
+  personal
+  work
+  family
+  other
 }
 
-enum ContactType {
-  work
-  home
-  personal
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+}
+
+enum TokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  TWO_FACTOR
+}
+
+model User {
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  name                String
+  password            String?
+  avatarUrl           String?
+
+  // Безпека та верифікація
+  isEmailVerified     Boolean   @default(false)
+  twoFactorEnabled    Boolean   @default(false)
+  twoFactorSecret     String?
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
+
+  // Зв'язки
+  contacts            Contact[]
+  accounts            Account[]
+  sessions            Session[]
+  verificationTokens  VerificationToken[]
+
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@map("users")
 }
 
 model Contact {
@@ -32,7 +56,7 @@ model Contact {
   name        String
   phoneNumber String
   email       String?
-  isFavorite Boolean     @default(false)
+  isFavorite  Boolean     @default(false)
   contactType ContactType @default(personal)
   photo       String?
   userId      String
@@ -41,4 +65,49 @@ model Contact {
   updatedAt   DateTime    @updatedAt
 
   @@map("contacts")
+}
+
+model Account {
+  id                String       @id @default(uuid())
+  userId            String
+  provider          AuthProvider
+  providerAccountId String
+  accessToken       String?
+  refreshToken      String?
+  expiresAt         Int?
+
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id               String   @id @default(uuid())
+  userId           String
+  refreshTokenHash String   @unique
+  userAgent        String?
+  ipAddress        String?
+  isRevoked        Boolean  @default(false)
+  expiresAt        DateTime
+  createdAt        DateTime @default(now())
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model VerificationToken {
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  type      TokenType
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+  @@map("verification_tokens")
 }
